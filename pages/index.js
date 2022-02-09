@@ -1,8 +1,10 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import styles from '../styles/Home.module.css';
+import { Button } from 'antd';
+import TableAnt from '../components/TableAnt';
 
-export default function Home() {
+export default function Home({ data }) {
+  // console.log(data);
   return (
     <div className={styles.container}>
       <Head>
@@ -15,20 +17,20 @@ export default function Home() {
         <h1 className={styles.title}>Catastros</h1>
 
         <p className={styles.description}>Table for catastros</p>
+
+        <TableAnt data={data} />
       </main>
 
-      <footer className={styles.footer}>
-        <a
-          href='https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src='/vercel.svg' alt='Vercel Logo' width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+      <footer className={styles.footer}></footer>
     </div>
   );
+}
+
+export async function getServerSideProps() {
+  const res = await fetch('http://localhost:3000/api/predios');
+  const data = await res.json();
+
+  return {
+    props: { data }, // will be passed to the page component as props
+  };
 }
