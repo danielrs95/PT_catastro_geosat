@@ -66,7 +66,7 @@ export const getStaticProps = wrapper.getStaticProps(
 
 const mapStateToProps = (state) => {
   return {
-    predios: state.predios,
+    predios: state.prediosList.predios,
   };
 };
 

@@ -1,6 +1,9 @@
 import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
-import { productListReducer } from './reducers/prediosReducer';
+import {
+  prediosListReducer,
+  prediosListReducer2,
+} from './reducers/prediosReducer';
 import thunkMiddleware from 'redux-thunk';
 
 const bindMiddleware = (middleware) => {
@@ -11,14 +14,10 @@ const bindMiddleware = (middleware) => {
   return applyMiddleware(...middleware);
 };
 
-// initial state
-const startState = {
-  data: [],
-};
-
-// const combinedReducer = combineReducers({
-//   predios: productListReducer,
-// });
+const combinedReducer = combineReducers({
+  prediosList: prediosListReducer,
+  prediosList2: prediosListReducer2,
+});
 
 const reducer = (state, action) => {
   if (action.type === HYDRATE) {
@@ -29,7 +28,7 @@ const reducer = (state, action) => {
     if (state.count) nextState.count = state.count; // preserve count value on client side navigation
     return nextState;
   } else {
-    return productListReducer(state, action);
+    return combinedReducer(state, action);
   }
 };
 
