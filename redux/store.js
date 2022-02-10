@@ -1,11 +1,24 @@
 import { createWrapper, HYDRATE } from 'next-redux-wrapper';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { productListReducer } from './reducers/prediosReducer';
+import thunkMiddleware from 'redux-thunk';
+
+const bindMiddleware = (middleware) => {
+  if (process.env.NODE_ENV !== 'production') {
+    const { composeWithDevTools } = require('redux-devtools-extension');
+    return composeWithDevTools(applyMiddleware(...middleware));
+  }
+  return applyMiddleware(...middleware);
+};
 
 // initial state
 const startState = {
   data: [],
 };
+
+// const combinedReducer = combineReducers({
+//   predios: productListReducer,
+// });
 
 const reducer = (state, action) => {
   if (action.type === HYDRATE) {
@@ -22,8 +35,8 @@ const reducer = (state, action) => {
 
 // create store
 // el initialState por default = startState
-const store = (initialState = startState) => {
-  return createStore(reducer, initialState);
+const makeStore = () => {
+  return createStore(reducer, bindMiddleware([thunkMiddleware]));
 };
 
-export const wrapper = createWrapper(store, { debug: true });
+export const wrapper = createWrapper(makeStore, { debug: true });

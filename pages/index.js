@@ -15,7 +15,7 @@ const { Header, Footer, Content } = Layout;
 const Home = ({ predios }) => {
   // we can use hooks or connect
   // const { predios } = useSelector((state) => state);
-  console.log(predios);
+  // console.log(predios);
 
   return (
     <Layout>
@@ -51,11 +51,18 @@ const Home = ({ predios }) => {
 
 export const getStaticProps = wrapper.getStaticProps(
   (store) =>
-    ({ preview }) => {
-      console.log('2. Page.getStaticProps uses the store to dispatch things');
-      store.dispatch(listPredios());
+    async ({ preview }) => {
+      // console.log('2. Page.getStaticProps uses the store to dispatch things');
+      await store.dispatch(listPredios());
     }
 );
+
+// export const getStaticProps = wrapper.getStaticProps((store) => async () => {
+// console.log('2. Page.getStaticProps uses the store to dispatch things');
+// store.dispatch(listPredios());
+// });
+
+// export default Home;
 
 const mapStateToProps = (state) => {
   return {
