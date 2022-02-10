@@ -39,12 +39,13 @@ function Home(props) {
             <h1>Catastros</h1>
             <p>Table for catastros</p>
             Content
+            <span>{payload.name}</span>
             <h1>
+              {payload ? payload.name : <span>No payload</span>}
               <Link href='/predios/edit'>
                 <a>Edit link</a>
               </Link>
             </h1>
-            <TableAnt />
           </Content>
 
           <Footer>Footer</Footer>
