@@ -4,11 +4,26 @@ import Link from 'next/link';
 
 import { Layout } from 'antd';
 import { Row, Col } from 'antd';
+import { wrapper } from '../redux/store';
+import { connect, useDispatch } from 'react-redux';
+import { listPredios } from '../redux/action/prediosActions';
+import { bindActionCreators } from 'redux';
+import { useEffect } from 'react';
 
 const { Header, Footer, Content } = Layout;
 
-export default function Home({ data }) {
+function Home(props) {
+  const { payload } = props.listPredios();
+
+  console.log(payload);
+
   // console.log(data);
+
+  // useEffect(() => {
+  //   const { payload } = props.listPredios();
+  //   console.log(payload);
+  // }, [props]);
+
   return (
     <Layout>
       <Head>
@@ -29,7 +44,7 @@ export default function Home({ data }) {
                 <a>Edit link</a>
               </Link>
             </h1>
-            <TableAnt data={data} />
+            <TableAnt />
           </Content>
 
           <Footer>Footer</Footer>
@@ -39,11 +54,14 @@ export default function Home({ data }) {
   );
 }
 
-export async function getStaticProps() {
-  const res = await fetch('http://localhost:3000/api/predios');
-  const data = await res.json();
+export const getStaticProps = wrapper.getStaticProps((store) => () => {
+  store.dispatch(listPredios());
+});
 
+const mapDispatchToProps = (dispatch) => {
   return {
-    props: { data }, // will be passed to the page component as props
+    listPredios: bindActionCreators(listPredios, dispatch),
   };
-}
+};
+
+export default connect(null, mapDispatchToProps)(Home);
