@@ -1,7 +1,6 @@
 import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import { createStore } from 'redux';
 import { productListReducer } from './reducers/prediosReducer';
-// import data from './pages/API/predios.json';
 
 // initial state
 const startState = {
@@ -14,6 +13,8 @@ const reducer = (state, action) => {
       ...state,
       ...action.payload,
     };
+    if (state.count) nextState.count = state.count; // preserve count value on client side navigation
+    return nextState;
   } else {
     return productListReducer(state, action);
   }
@@ -25,4 +26,4 @@ const store = (initialState = startState) => {
   return createStore(reducer, initialState);
 };
 
-export const wrapper = createWrapper(store);
+export const wrapper = createWrapper(store, { debug: true });

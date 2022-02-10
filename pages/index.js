@@ -5,24 +5,17 @@ import Link from 'next/link';
 import { Layout } from 'antd';
 import { Row, Col } from 'antd';
 import { wrapper } from '../redux/store';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { listPredios } from '../redux/action/prediosActions';
 import { bindActionCreators } from 'redux';
-import { useEffect } from 'react';
+import React from 'react';
 
 const { Header, Footer, Content } = Layout;
 
-function Home(props) {
-  const { payload } = props.listPredios();
-
-  console.log(payload);
-
-  // console.log(data);
-
-  // useEffect(() => {
-  //   const { payload } = props.listPredios();
-  //   console.log(payload);
-  // }, [props]);
+const Home = ({ predios }) => {
+  // we can use hooks or connect
+  // const { predios } = useSelector((state) => state);
+  console.log(predios);
 
   return (
     <Layout>
@@ -39,13 +32,14 @@ function Home(props) {
             <h1>Catastros</h1>
             <p>Table for catastros</p>
             Content
-            <span>{payload.name}</span>
+            {/* <span>{payload.name}</span> */}
             <h1>
-              {payload ? payload.name : <span>No payload</span>}
+              {/* {payload ? payload.name : <span>No payload</span>} */}
               <Link href='/predios/edit'>
                 <a>Edit link</a>
               </Link>
             </h1>
+            <TableAnt data={predios} />
           </Content>
 
           <Footer>Footer</Footer>
@@ -53,11 +47,21 @@ function Home(props) {
       </Row>
     </Layout>
   );
-}
+};
 
-export const getStaticProps = wrapper.getStaticProps((store) => () => {
-  store.dispatch(listPredios());
-});
+export const getStaticProps = wrapper.getStaticProps(
+  (store) =>
+    ({ preview }) => {
+      console.log('2. Page.getStaticProps uses the store to dispatch things');
+      store.dispatch(listPredios());
+    }
+);
+
+const mapStateToProps = (state) => {
+  return {
+    predios: state.predios,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -65,4 +69,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
