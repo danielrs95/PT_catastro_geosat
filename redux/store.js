@@ -16,7 +16,6 @@ const bindMiddleware = (middleware) => {
 
 const combinedReducer = combineReducers({
   prediosList: prediosListReducer,
-  prediosList2: prediosListReducer2,
 });
 
 const reducer = (state, action) => {
@@ -33,7 +32,6 @@ const reducer = (state, action) => {
 };
 
 // create store
-// el initialState por default = startState
 const makeStore = () => {
   return createStore(reducer, bindMiddleware([thunkMiddleware]));
 };

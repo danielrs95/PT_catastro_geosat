@@ -32,9 +32,7 @@ const Home = ({ predios }) => {
             <h1>Catastros</h1>
             <p>Table for catastros</p>
             Content
-            {/* <span>{payload.name}</span> */}
             <h1>
-              {/* {payload ? payload.name : <span>No payload</span>} */}
               <Link href='/predios/edit'>
                 <a>Edit link</a>
               </Link>
@@ -52,17 +50,10 @@ const Home = ({ predios }) => {
 export const getStaticProps = wrapper.getStaticProps(
   (store) =>
     async ({ preview }) => {
-      // console.log('2. Page.getStaticProps uses the store to dispatch things');
+      console.log('2. Page.getStaticProps uses the store to dispatch things');
       await store.dispatch(listPredios());
     }
 );
-
-// export const getStaticProps = wrapper.getStaticProps((store) => async () => {
-// console.log('2. Page.getStaticProps uses the store to dispatch things');
-// store.dispatch(listPredios());
-// });
-
-// export default Home;
 
 const mapStateToProps = (state) => {
   return {
