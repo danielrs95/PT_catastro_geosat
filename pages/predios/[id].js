@@ -1,78 +1,107 @@
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button } from 'antd';
+import axios from 'axios';
 import Link from 'next/link';
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { listPredioDetails } from '../../redux/action/prediosActions';
 import { wrapper } from '../../redux/store';
 
 const Edit = ({ predio }) => {
-  console.log(predio);
+  // console.log(predio);
+  // const [form] = Form.useForm();
 
-  const onFinish = (values) => {
-    console.log('Success:', values);
-  };
+  // form.setFields({
+  //   nombre: predio.name,
+  // });
 
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-  };
+  // useEffect(() => {
+  //   form.resetFields();
+
+  //   form.setFieldsValue({
+  //     nombre: predio.nombre,
+  //   });
+  // }, []);
+
+  // return (
+  //   <Form form={form} name='edit_data_form'>
+  //     <Form.Item name='nombre'>
+  //       <Input />
+  //     </Form.Item>
+
+  //     <Form.Item name='precio'>
+  //       <Input />
+  //     </Form.Item>
+
+  //     <Form.Item>
+  //       <Button
+  //         className='button'
+  //         type='primary'
+  //         htmlType='submit'
+  //         disabled={
+  //           form.getFieldsError().filter(({ errors }) => errors.length).length
+  //         }
+  //       >
+  //         Submit
+  //       </Button>
+  //     </Form.Item>
+  //   </Form>
+  // );
 
   return (
-    <div>
-      Edita catastro
-      <Form
-        name='basic'
-        labelCol={{
-          span: 8,
-        }}
+    <Form
+      // name='basic'
+      labelCol={{
+        span: 8,
+      }}
+      wrapperCol={{
+        span: 16,
+      }}
+      initialValues={{
+        // nombre: 'test',
+        nombre: predio.nombre,
+        precio: 'test',
+      }}
+      autoComplete='off'
+    >
+      <Form.Item
+        label='Nombre'
+        name='nombre'
+        // initialValue={predio.name}
+        rules={[
+          {
+            required: true,
+            message: 'Please input your username!',
+          },
+        ]}
+        // value='test'
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label='Precio'
+        name='precio'
+        rules={[
+          {
+            required: true,
+            message: 'Please input your password!',
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
         wrapperCol={{
+          offset: 8,
           span: 16,
         }}
-        initialValues={{
-          remember: true,
-        }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete='off'
       >
-        <Form.Item
-          label='Nombre'
-          name='name'
-          initialValue={predio.name}
-          rules={[
-            {
-              required: true,
-              message: 'Please input your username!',
-            },
-          ]}
-          value='test'
-        >
-          <Input value='test' />
-        </Form.Item>
-
-        <Form.Item
-          label='Precio'
-          name='precio'
-          rules={[
-            {
-              required: true,
-              message: 'Please input your password!',
-            },
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item
-          wrapperCol={{
-            offset: 8,
-            span: 16,
-          }}
-        >
-          <Button type='primary' htmlType='submit'>
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
-    </div>
+        <Button type='primary' htmlType='submit'>
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
   );
 };
 
@@ -93,15 +122,17 @@ const Edit = ({ predio }) => {
 //  }
 
 export const getStaticPaths = async () => {
-  //  const posts = await // your database query or fetch to remote API
+  const { data } = await axios.get('http://localhost:3000/api/predios/'); // your database query or fetch to remote API
+
+  // console.log(data);
 
   // generate the paths
-  // const paths = posts.map((post) => ({
-  //   params: { id: '5' }, // keep in mind if post.id is a number you need to stringify post.id
-  // }));
+  const paths = data.map((predio) => ({
+    params: { id: JSON.stringify(predio.id) }, // keep in mind if post.id is a number you need to stringify post.id
+  }));
 
   // Structure for getStaticPaths
-  const paths = [{ params: { id: '5' } }];
+  // const paths = [{ params: { id: '5' } }];
 
   return {
     paths,
@@ -109,12 +140,13 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = wrapper.getStaticProps(
-  (store) =>
-    async ({ preview }) => {
-      console.log('2. Page.getStaticProps uses the store to dispatch things');
-      await store.dispatch(listPredioDetails('5'));
-    }
+export const getStaticProps = wrapper.getStaticProps((store) =>
+  // We destructure from context preview & params
+  async ({ preview, params }) => {
+    console.log('2. Page.getStaticProps uses the store to dispatch things');
+    console.log(params);
+    await store.dispatch(listPredioDetails(params.id));
+  }
 );
 
 const mapStateToProps = (state) => {
