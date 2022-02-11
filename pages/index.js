@@ -32,11 +32,6 @@ const Home = ({ predios }) => {
             <h1>Catastros</h1>
             <p>Table for catastros</p>
             Content
-            <h1>
-              <Link href='/predios/edit'>
-                <a>Edit link</a>
-              </Link>
-            </h1>
             <TableAnt data={predios} />
           </Content>
 
@@ -61,10 +56,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    listPredios: bindActionCreators(listPredios, dispatch),
-  };
-};
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     listPredios: bindActionCreators(listPredios, dispatch),
+//   };
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, null)(Home);

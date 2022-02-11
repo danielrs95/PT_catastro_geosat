@@ -1,4 +1,7 @@
 import {
+  PREDIOS_DETAIL_FAIL,
+  PREDIOS_DETAIL_REQUEST,
+  PREDIOS_DETAIL_SUCCESS,
   PREDIOS_LIST_FAIL,
   PREDIOS_LIST_REQUEST,
   PREDIOS_LIST_SUCCESS,
@@ -14,6 +17,22 @@ export const prediosListReducer = (state = {}, action) => {
 
     case PREDIOS_LIST_FAIL:
       return { error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const predioDetailsReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PREDIOS_DETAIL_REQUEST:
+      return { ...state };
+
+    case PREDIOS_DETAIL_SUCCESS:
+      return { predio: action.payload };
+
+    case PREDIOS_DETAIL_FAIL:
+      return { error: action.payload };
+
     default:
       return state;
   }

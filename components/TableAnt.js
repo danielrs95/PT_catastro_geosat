@@ -1,14 +1,20 @@
 import { Table, Tag, Space } from 'antd';
+import Link from 'next/link';
 const columns = [
-  {
-    title: 'ID',
-    dataIndex: 'id',
-    key: 'id',
-  },
+  // {
+  //   title: 'ID',
+  //   dataIndex: 'id',
+  //   key: 'id',
+  // },
   {
     title: 'Nombre',
     dataIndex: 'nombre',
     key: 'nombre',
+    render: (text, record) => (
+      <Link href={'predios/' + record.id}>
+        <a>{text}</a>
+      </Link>
+    ),
   },
   {
     title: 'Precio',
@@ -17,8 +23,8 @@ const columns = [
   },
   {
     title: 'Departamento',
-    dataIndex: 'Departamento',
-    key: 'Departamento',
+    dataIndex: 'departamento',
+    key: 'departamento',
   },
   {
     title: 'municipio',
@@ -40,15 +46,10 @@ const columns = [
     key: 'terreno',
     dataIndex: 'terreno',
   },
-  // {
-  //   title: 'created_on',
-  //   key: 'created_on',
-  //   dataIndex: 'created_on',
-  // },
 ];
 
 const TableAnt = ({ data }) => {
-  console.log(data);
+  // console.log(data);
   return <Table columns={columns} dataSource={data} />;
 };
 

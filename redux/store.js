@@ -1,8 +1,8 @@
 import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import {
+  predioDetailsReducer,
   prediosListReducer,
-  prediosListReducer2,
 } from './reducers/prediosReducer';
 import thunkMiddleware from 'redux-thunk';
 
@@ -16,6 +16,7 @@ const bindMiddleware = (middleware) => {
 
 const combinedReducer = combineReducers({
   prediosList: prediosListReducer,
+  predioDetails: predioDetailsReducer,
 });
 
 const reducer = (state, action) => {
