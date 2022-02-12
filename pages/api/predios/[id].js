@@ -6,7 +6,8 @@ export default async (req, res) => {
   switch (method) {
     case 'GET':
       try {
-        const text = 'SELECT * FROM predios WHERE id = $1';
+        const text =
+          'SELECT * FROM predios NATURAL JOIN propietarios, construcciones WHERE id = $1 ';
         const values = [query.id];
         const result = await db.query(text, values);
 
@@ -24,26 +25,23 @@ export default async (req, res) => {
           precio,
           departamento,
           municipio,
-          propietario,
-          construcciones,
+          c_pisos,
+          c_area,
+          c_tipo,
+          c_direccion,
+          p_direccion,
+          p_telefono,
+          p_email,
+          p_tipo,
           terreno,
         } = body;
 
-        console.log(query);
+        // console.log(query);
 
         const text =
-          'UPDATE predios SET nombre = $1, precio = $2, departamento = $3, municipio = $4, propietario = $5, construcciones = $6, terreno = $7 WHERE id = $8 RETURNING *';
+          'UPDATE predios SET nombre = $1, precio = $2, departamento = $3, municipio = $4 WHERE id = $5 RETURNING *';
 
-        const values = [
-          nombre,
-          precio,
-          departamento,
-          municipio,
-          propietario,
-          construcciones,
-          terreno,
-          query.id,
-        ];
+        const values = [nombre, precio, departamento, municipio, query.id];
 
         const result = await db.query(text, values);
         return res.json(result.rows[0]);

@@ -13,6 +13,7 @@ import {
 import { wrapper } from '../../redux/store';
 
 const Edit = ({ predio, dispatch }) => {
+  console.log(predio);
   const router = useRouter();
 
   const onFinish = (values) => {
@@ -54,8 +55,14 @@ const Edit = ({ predio, dispatch }) => {
         precio: predio.precio,
         departamento: predio.departamento,
         municipio: predio.municipio,
-        propietario: predio.propietario,
-        construcciones: predio.construcciones,
+        c_pisos: predio.c_pisos,
+        c_area: predio.c_area,
+        c_tipo: predio.c_tipo,
+        c_direccion: predio.c_direccion,
+        p_direccion: predio.p_direccion,
+        p_telefono: predio.p_telefono,
+        p_email: predio.p_email,
+        p_tipo: predio.p_tipo,
         terreno: predio.terreno,
       }}
       autoComplete='off'
@@ -113,27 +120,65 @@ const Edit = ({ predio, dispatch }) => {
       </Form.Item>
 
       <Form.Item
-        label='Propietario'
-        name='propietario'
-        rules={[
-          {
-            required: true,
-            message: 'Ingrese un propietario',
-          },
-        ]}
+        label='Propietario Direccion'
+        name='p_direccion'
+        rules={[{ message: 'Ingrese un propietario' }]}
       >
         <Input />
       </Form.Item>
 
       <Form.Item
-        label='Construcciones'
-        name='construcciones'
-        rules={[
-          {
-            required: true,
-            message: 'Ingrese un construcciones',
-          },
-        ]}
+        label='Propietario Telefono'
+        name='p_telefono'
+        rules={[{ message: 'Ingrese un propietario' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label='Propietario Email'
+        name='p_email'
+        rules={[{ message: 'Ingrese un propietario' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label='Propietario Tipo'
+        name='p_tipo'
+        rules={[{ message: 'Ingrese un propietario' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label='Construcciones Pisos'
+        name='c_pisos'
+        rules={[{ message: 'Ingrese un construcciones' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label='Construcciones Area'
+        name='c_area'
+        rules={[{ message: 'Ingrese un construcciones' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label='Construcciones Tipo'
+        name='c_tipo'
+        rules={[{ message: 'Ingrese un construcciones' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label='Construcciones Direccion'
+        name='c_direccion'
+        rules={[{ message: 'Ingrese un construcciones' }]}
       >
         <Input />
       </Form.Item>
@@ -143,7 +188,7 @@ const Edit = ({ predio, dispatch }) => {
         name='terreno'
         rules={[
           {
-            required: true,
+            // required: true,
             message: 'Ingrese un terreno',
           },
         ]}

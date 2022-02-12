@@ -4,20 +4,20 @@ DROP TABLE construcciones, predios, propietarios, terrenos;
 
 CREATE TABLE IF NOT EXISTS propietarios (
   pid SERIAL PRIMARY KEY,
-  direccion VARCHAR(100),
-  telefono VARCHAR(100),
-  email VARCHAR(100),
+  p_direccion VARCHAR(100),
+  p_telefono VARCHAR(100),
+  p_email VARCHAR(100),
   -- Should be later 2 predefined values Natural/Juridica
-  tipo VARCHAR(100)
+  p_tipo VARCHAR(100)
 );
 
 CREATE TABLE IF NOT EXISTS construcciones (
   cid SERIAL PRIMARY KEY,
-  pisos INT,
-  area VARCHAR(100),
+  c_pisos VARCHAR(100),
+  c_area VARCHAR(100),
   -- Should be later 3 predefined values Industrial, Comercial o Residencial
-  tipo VARCHAR(100),
-  direccion VARCHAR(100)
+  c_tipo VARCHAR(100),
+  c_direccion VARCHAR(100)
 );
 
 CREATE TABLE IF NOT EXISTS terrenos (
@@ -42,13 +42,14 @@ CREATE TABLE IF NOT EXISTS predios(
   created_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Insert construcciones, propietarios & predios in 1 operation
 WITH INSERTED AS (
-  insert INTO construcciones(pisos, area, tipo, direccion)
+  insert INTO construcciones(c_pisos, c_area, c_tipo, c_direccion)
   values ( 3, '200', 'Residencial', 'Medellin')
   on CONFLICT DO NOTHING
   RETURNING cid
 ), new_user AS (
-  INSERT INTO propietarios(direccion, telefono, email,tipo)
+  INSERT INTO propietarios(p_direccion, p_telefono, p_email, p_tipo)
   VALUES ('Medellin HARD CODED','300354','daniel@email','Natural')
   ON CONFLICT DO NOTHING
   RETURNING pid
@@ -62,6 +63,18 @@ values (
     (SELECT cid FROM INSERTED)
   )
 ) RETURNING *;
+
+-- update predios & construcciones
+WITH new_a AS (
+  UPDATE predios
+    SET nombre = '$1', precio = '$2', departamento = '$3', municipio = '$4'
+  WHERE id = 1
+)
+UPDATE construcciones
+  SET c_pisos = '110'
+WHERE cid = 1;
+
+SELECT * FROM predios NATURAL JOIN propietarios, construcciones;
 
 INSERT INTO propietarios(
   direccion, telefono, email,tipo

@@ -6,7 +6,8 @@ export default async (req, res) => {
   switch (method) {
     case 'GET':
       try {
-        const query = 'SELECT * FROM predios';
+        const query =
+          'SELECT * FROM predios NATURAL JOIN propietarios, construcciones;';
         const response = await db.query(query);
         return res.json(response.rows);
       } catch (error) {
@@ -28,9 +29,6 @@ export default async (req, res) => {
           precio,
           departamento,
           municipio,
-          propietario_id,
-          construccion_id,
-          terreno_id,
         } = body;
 
         // const query =
@@ -55,12 +53,12 @@ export default async (req, res) => {
         ];
 
         const query = `WITH INSERTED AS (
-          insert INTO construcciones(pisos, area, tipo, direccion)
+          insert INTO construcciones(c_pisos, c_area, c_tipo, c_direccion)
           values ( $1, $2, $3, $4)
           on CONFLICT DO NOTHING
           RETURNING cid
         ), new_user AS(
-          INSERT INTO propietarios(direccion, telefono, email,tipo)
+          INSERT INTO propietarios(p_direccion, p_telefono, p_email, p_tipo)
           VALUES ($5, $6, $7, $8)
           ON CONFLICT DO NOTHING
           RETURNING pid
@@ -76,7 +74,6 @@ export default async (req, res) => {
         ) RETURNING *`;
 
         // console.log('objeto que llega al post', values);
-
         // const response = await db.query(query);
         const response = await db.query(query, values);
 
