@@ -10,8 +10,8 @@ const columns = [
     title: 'Nombre',
     dataIndex: 'nombre',
     key: 'nombre',
-    render: (text, record) => (
-      <Link href={'predios/' + record.id}>
+    render: (text, predio) => (
+      <Link href={'predios/' + predio.id}>
         <a>{text}</a>
       </Link>
     ),

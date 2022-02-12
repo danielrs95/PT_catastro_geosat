@@ -15,6 +15,11 @@ export const PREDIOS_UPDATE_REQUEST = 'PREDIOS_UPDATE_REQUEST';
 export const PREDIOS_UPDATE_SUCCESS = 'PREDIOS_UPDATE_SUCCESS';
 export const PREDIOS_UPDATE_FAIL = 'PREDIOS_UPDATE_FAIL';
 
+// Delete predio constants
+export const PREDIOS_DELETE_REQUEST = 'PREDIOS_DELETE_REQUEST';
+export const PREDIOS_DELETE_SUCCESS = 'PREDIOS_DELETE_SUCCESS';
+export const PREDIOS_DELETE_FAIL = 'PREDIOS_DELETE_FAIL';
+
 // Action creators
 export const listPredios = () => async (dispatch) => {
   try {
@@ -63,19 +68,9 @@ export const updatePredio = (predio) => async (dispatch) => {
     console.log('Predio from action', predio);
     dispatch({ type: PREDIOS_UPDATE_REQUEST });
 
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        // Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-
-    let { id } = predio;
-
     const { data } = await axios.put(
-      `http://localhost:3000/api/predios/${id}`,
-      predio,
-      config
+      `http://localhost:3000/api/predios/${predio.id}`,
+      predio
     );
 
     dispatch({
@@ -85,6 +80,26 @@ export const updatePredio = (predio) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PREDIOS_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const deletePredio = (predio) => async (dispatch) => {
+  try {
+    dispatch({ type: PREDIOS_DELETE_REQUEST });
+
+    await axios.delete(`http://localhost:3000/api/predios/${predio.id}`);
+
+    dispatch({
+      type: PREDIOS_DELETE_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: PREDIOS_DELETE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

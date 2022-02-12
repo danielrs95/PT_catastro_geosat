@@ -1,6 +1,7 @@
 import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import {
+  predioDeleteReducer,
   predioDetailsReducer,
   prediosListReducer,
   predioUpdateReducer,
@@ -19,6 +20,7 @@ const combinedReducer = combineReducers({
   prediosList: prediosListReducer,
   predioDetails: predioDetailsReducer,
   predioUpdate: predioUpdateReducer,
+  predioDelete: predioDeleteReducer,
 });
 
 const reducer = (state, action) => {

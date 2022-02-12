@@ -1,17 +1,22 @@
 import { Form, Input, Button } from 'antd';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
+  deletePredio,
   listPredioDetails,
   updatePredio,
 } from '../../redux/action/prediosActions';
 import { wrapper } from '../../redux/store';
 
 const Edit = ({ predio, dispatch }) => {
+  const router = useRouter();
+
   const onFinish = (values) => {
+    console.log(predio);
     // console.log('Success:', values);
 
     let updatedPredio = {
@@ -27,12 +32,11 @@ const Edit = ({ predio, dispatch }) => {
     // console.log(updatedPredio);
 
     dispatch(updatePredio(updatedPredio));
-
-    // update(updatedPredio);
   };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+  const onDeletedHandler = (predio) => {
+    dispatch(deletePredio(predio));
+    router.push('/');
   };
 
   return (
@@ -159,6 +163,11 @@ const Edit = ({ predio, dispatch }) => {
         <Button type='link' href='/'>
           Volver
         </Button>
+
+        <Button onClick={() => onDeletedHandler(predio)} danger>
+          {' '}
+          Eliminar predios
+        </Button>
       </Form.Item>
     </Form>
   );
@@ -197,10 +206,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    update: bindActionCreators(updatePredio, dispatch),
-  };
-};
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     updatePredio: bindActionCreators(updatePredio, dispatch),
+//   };
+// };
 
 export default connect(mapStateToProps, null)(Edit);
