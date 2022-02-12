@@ -1,5 +1,7 @@
 -- First we have to create main tables before making the ones that reference them
 
+DROP TABLE construcciones, predios, propietarios, terrenos;
+
 CREATE TABLE IF NOT EXISTS propietarios (
   pid SERIAL PRIMARY KEY,
   direccion VARCHAR(100),
@@ -40,6 +42,27 @@ CREATE TABLE IF NOT EXISTS predios(
   created_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
+WITH INSERTED AS (
+  insert INTO construcciones(pisos, area, tipo, direccion)
+  values ( 3, '200', 'Residencial', 'Medellin')
+  on CONFLICT DO NOTHING
+  RETURNING cid
+), new_user AS (
+  INSERT INTO propietarios(direccion, telefono, email,tipo)
+  VALUES ('Medellin HARD CODED','300354','daniel@email','Natural')
+  ON CONFLICT DO NOTHING
+  RETURNING pid
+) INSERT INTO predios(nombre, precio, departamento, municipio, propietario_id, construccion_id)
+values (
+  'nombre', 'precio', 'dpto', 'muni',
+  COALESCE(
+    (SELECT pid from new_user)
+  ),
+  COALESCE(
+    (SELECT cid FROM INSERTED)
+  )
+) RETURNING *;
+
 INSERT INTO propietarios(
   direccion, telefono, email,tipo
 ) VALUES (
@@ -49,20 +72,28 @@ INSERT INTO propietarios(
   'Persona natural'
 );
 
-WITH INSERTED AS (
-  insert INTO construcciones(pisos, area, tipo, direccion)
-  values ( 3, '200', 'Residencial', 'Medellin')
-  on CONFLICT DO NOTHING
-  RETURNING cid
-) INSERT INTO predios(nombre, precio, departamento, municipio, propietario_id, construccion_id)
-values (
-  'nombre', 'precio', 'dpto', 'muni', 1,
-  COALESCE(
-    (SELECT cid FROM INSERTED)
-  )
-) RETURNING *;
+-- WITH INSERTED AS (
+--   insert INTO construcciones(pisos, area, tipo, direccion)
+--   values ( 3, '200', 'Residencial', 'Medellin')
+--   on CONFLICT DO NOTHING
+--   RETURNING cid
+-- )
+-- WITH new_user AS (
+--   INSERT INTO propietario(direccion, telefono, email,tipo)
+--   VALUES ('Medellin HARD CODED','300354','daniel@email','Natural')
+--   ON CONFLICT DO NOTHING
+--   RETURNING pid
+-- ) INSERT INTO predios(nombre, precio, departamento, municipio, propietario_id, construccion_id)
+-- values (
+--   'nombre', 'precio', 'dpto', 'muni',
+--   COALESCE(
+--     SELECT pid from new_user
+--   ),
+--   COALESCE(
+--     (SELECT cid FROM INSERTED)
+--   )
+-- ) RETURNING *;
 
-DROP TABLE construcciones, predios, propietarios, terrenos;
 
 -- Basic data for populate table with relations
 -- Propietarios & construcciones are the basic tables (like the main building blocks)
