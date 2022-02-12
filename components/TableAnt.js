@@ -1,11 +1,6 @@
 import { Table, Tag, Space } from 'antd';
 import Link from 'next/link';
 const columns = [
-  // {
-  //   title: 'ID',
-  //   dataIndex: 'id',
-  //   key: 'id',
-  // },
   {
     title: 'Nombre',
     dataIndex: 'nombre',
@@ -49,7 +44,6 @@ const columns = [
 ];
 
 const TableAnt = ({ data }) => {
-  // console.log(data);
   return <Table columns={columns} dataSource={data} />;
 };
 

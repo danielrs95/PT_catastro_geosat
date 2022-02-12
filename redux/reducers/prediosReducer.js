@@ -1,4 +1,7 @@
 import {
+  PREDIOS_CREATE_FAIL,
+  PREDIOS_CREATE_REQUEST,
+  PREDIOS_CREATE_SUCCESS,
   PREDIOS_DELETE_FAIL,
   PREDIOS_DELETE_REQUEST,
   PREDIOS_DELETE_SUCCESS,
@@ -69,6 +72,22 @@ export const predioDeleteReducer = (state = {}, action) => {
       return { success: true };
 
     case PREDIOS_DELETE_FAIL:
+      return { error: action.payload };
+
+    default:
+      return state;
+  }
+};
+
+export const predioCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PREDIOS_CREATE_REQUEST:
+      return { ...state };
+
+    case PREDIOS_CREATE_SUCCESS:
+      return { predio: action.payload };
+
+    case PREDIOS_CREATE_FAIL:
       return { error: action.payload };
 
     default:

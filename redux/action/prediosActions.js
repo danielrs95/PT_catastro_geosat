@@ -20,6 +20,11 @@ export const PREDIOS_DELETE_REQUEST = 'PREDIOS_DELETE_REQUEST';
 export const PREDIOS_DELETE_SUCCESS = 'PREDIOS_DELETE_SUCCESS';
 export const PREDIOS_DELETE_FAIL = 'PREDIOS_DELETE_FAIL';
 
+// Create predio constants
+export const PREDIOS_CREATE_REQUEST = 'PREDIOS_CREATE_REQUEST';
+export const PREDIOS_CREATE_SUCCESS = 'PREDIOS_CREATE_SUCCESS';
+export const PREDIOS_CREATE_FAIL = 'PREDIOS_CREATE_FAIL';
+
 // Action creators
 export const listPredios = () => async (dispatch) => {
   try {
@@ -100,6 +105,28 @@ export const deletePredio = (predio) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PREDIOS_DELETE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const createPredio = (predio) => async (dispatch) => {
+  try {
+    dispatch({ type: PREDIOS_CREATE_REQUEST });
+    const { data } = await axios.post(
+      `http://localhost:3000/api/predios/`,
+      predio
+    );
+    dispatch({
+      type: PREDIOS_CREATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PREDIOS_CREATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

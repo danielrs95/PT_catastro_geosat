@@ -2,7 +2,7 @@ import Head from 'next/head';
 import TableAnt from '../components/TableAnt';
 import Link from 'next/link';
 
-import { Layout } from 'antd';
+import { Button, Layout } from 'antd';
 import { Row, Col } from 'antd';
 import { wrapper } from '../redux/store';
 import { connect, useDispatch, useSelector } from 'react-redux';
@@ -25,13 +25,13 @@ const Home = ({ predios }) => {
       </Head>
 
       <Row justify='center'>
-        <Col xs={20}>
+        <Col xs={18}>
           <Header></Header>
           <Content>
-            Header
-            <h1>Catastros</h1>
-            <p>Table for catastros</p>
-            Content
+            <Link href='predios/new/'>
+              <a>Nuevo predio</a>
+            </Link>
+            <p>Tabla for catastros</p>
             <TableAnt data={predios} />
           </Content>
 

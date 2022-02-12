@@ -6,21 +6,18 @@ import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
+  createPredio,
   deletePredio,
   listPredioDetails,
   updatePredio,
 } from '../../redux/action/prediosActions';
 import { wrapper } from '../../redux/store';
 
-const Edit = ({ predio, dispatch }) => {
+const New = ({ predio, dispatch }) => {
   const router = useRouter();
 
   const onFinish = (values) => {
-    console.log(predio);
-    // console.log('Success:', values);
-
-    let updatedPredio = {
-      ...predio,
+    let newPredio = {
       nombre: values.nombre,
       precio: values.precio,
       departamento: values.departamento,
@@ -29,14 +26,8 @@ const Edit = ({ predio, dispatch }) => {
       construcciones: values.construcciones,
       terreno: values.terreno,
     };
-    // console.log(updatedPredio);
 
-    dispatch(updatePredio(updatedPredio));
-    router.push('/');
-  };
-
-  const onDeletedHandler = (predio) => {
-    dispatch(deletePredio(predio));
+    dispatch(createPredio(newPredio));
     router.push('/');
   };
 
@@ -49,15 +40,15 @@ const Edit = ({ predio, dispatch }) => {
       wrapperCol={{
         span: 16,
       }}
-      initialValues={{
-        nombre: predio.nombre,
-        precio: predio.precio,
-        departamento: predio.departamento,
-        municipio: predio.municipio,
-        propietario: predio.propietario,
-        construcciones: predio.construcciones,
-        terreno: predio.terreno,
-      }}
+      // initialValues={{
+      //   nombre: predio.nombre,
+      //   precio: predio.precio,
+      //   departamento: predio.departamento,
+      //   municipio: predio.municipio,
+      //   propietario: predio.propietario,
+      //   construcciones: predio.construcciones,
+      //   terreno: predio.terreno,
+      // }}
       autoComplete='off'
     >
       <Form.Item
@@ -164,53 +155,9 @@ const Edit = ({ predio, dispatch }) => {
         <Button type='link' href='/'>
           Volver
         </Button>
-
-        <Button onClick={() => onDeletedHandler(predio)} danger>
-          {' '}
-          Eliminar predios
-        </Button>
       </Form.Item>
     </Form>
   );
 };
 
-export const getStaticPaths = async () => {
-  const { data } = await axios.get('http://localhost:3000/api/predios/'); // your database query or fetch to remote API
-
-  // console.log(data);
-  // generate the paths
-  const paths = data.map((predio) => ({
-    params: { id: JSON.stringify(predio.id) }, // keep in mind if post.id is a number you need to stringify post.id
-  }));
-
-  // Structure for getStaticPaths
-  // const paths = [{ params: { id: '5' } }];
-
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
-export const getStaticProps = wrapper.getStaticProps((store) =>
-  // We destructure from context preview & params
-  async ({ preview, params }) => {
-    console.log('2. Page.getStaticProps uses the store to dispatch things');
-    console.log(params);
-    await store.dispatch(listPredioDetails(params.id));
-  }
-);
-
-const mapStateToProps = (state) => {
-  return {
-    predio: state.predioDetails.predio,
-  };
-};
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     updatePredio: bindActionCreators(updatePredio, dispatch),
-//   };
-// };
-
-export default connect(mapStateToProps, null)(Edit);
+export default connect()(New);
