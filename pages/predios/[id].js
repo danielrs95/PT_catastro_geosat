@@ -17,8 +17,7 @@ const Edit = ({ predio, dispatch }) => {
   const router = useRouter();
 
   const onFinish = (values) => {
-    console.log(predio);
-    // console.log('Success:', values);
+    console.log('DESDE CLIENTE', predio);
 
     let updatedPredio = {
       ...predio,
@@ -26,8 +25,14 @@ const Edit = ({ predio, dispatch }) => {
       precio: values.precio,
       departamento: values.departamento,
       municipio: values.municipio,
-      propietario: values.propietario,
-      construcciones: values.construcciones,
+      c_pisos: values.c_pisos,
+      c_area: values.c_area,
+      c_tipo: values.c_tipo,
+      c_direccion: values.c_direccion,
+      p_direccion: values.p_direccion,
+      p_telefono: values.p_telefono,
+      p_email: values.p_email,
+      p_tipo: values.p_tipo,
       terreno: values.terreno,
     };
     // console.log(updatedPredio);

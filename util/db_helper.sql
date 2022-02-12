@@ -69,9 +69,13 @@ WITH new_a AS (
   UPDATE predios
     SET nombre = '$1', precio = '$2', departamento = '$3', municipio = '$4'
   WHERE id = 1
+), new_b AS (
+  UPDATE propietarios
+    SET p_direccion = '$5', p_telefono = '$6', p_email = '$7', p_tipo = '$8'
+  WHERE cid = 1
 )
 UPDATE construcciones
-  SET c_pisos = '$5', c_area = '$6', c_tipo = '$7', c_direccion = '$8'
+  SET c_pisos = '$9', c_area = '$10', c_tipo = '$11', c_direccion = '$12'
 WHERE cid = 1;
 
 SELECT * FROM predios NATURAL JOIN propietarios, construcciones;

@@ -34,30 +34,40 @@ export default async (req, res) => {
           p_email,
           p_tipo,
           terreno,
+          propietario_id,
           construccion_id,
         } = body;
 
-        // console.log(query);
+        console.log(query);
 
         const text = `WITH new_a AS (
             UPDATE predios
               SET nombre = $1, precio = $2, departamento = $3, municipio = $4
-            WHERE id = $9
+            WHERE id = $13
+          ), new_b as (
+              UPDATE propietarios
+                SET p_direccion = $5, p_telefono = $6, p_email = $7, p_tipo = $8
+              WHERE pid = $14
           )
             UPDATE construcciones
-              SET c_pisos = $5, c_area = $6, c_tipo = $7, c_direccion = $8
-            WHERE cid = $10;`;
+              SET c_pisos = $9, c_area = $10, c_tipo = $11, c_direccion = $12
+            WHERE cid = $15;`;
 
         const values = [
           nombre,
           precio,
           departamento,
           municipio,
+          p_direccion,
+          p_telefono,
+          p_email,
+          p_tipo,
           c_pisos,
           c_area,
           c_tipo,
           c_direccion,
           query.id,
+          propietario_id,
           construccion_id,
         ];
 
