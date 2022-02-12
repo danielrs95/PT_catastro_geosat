@@ -58,8 +58,7 @@ WITH INSERTED AS (
 values (
   'nombre', 'precio', 'dpto', 'muni', 1,
   COALESCE(
-    (SELECT cid FROM INSERTED),
-    (SELECT construccion_id FROM predios WHERE nombre='nombre')
+    (SELECT cid FROM INSERTED)
   )
 );
 
