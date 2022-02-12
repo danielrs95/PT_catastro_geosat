@@ -1,19 +1,5 @@
 -- First we have to create main tables before making the ones that reference them
 
-CREATE TABLE IF NOT EXISTS predios(
-  id SERIAL PRIMARY KEY,
-  nombre VARCHAR(100),
-  precio VARCHAR(100),
-  departamento VARCHAR(100),
-  municipio VARCHAR(100),
-  propietario_id INT REFERENCES propietarios(pid),
-  construccion_id INT REFERENCES construcciones(cid),
-  -- Use this to optional reference nullable foreign key
-  terreno_id INT,
-  FOREIGN KEY (terreno_id) REFERENCES terrenos(tid),
-  created_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-);
-
 CREATE TABLE IF NOT EXISTS propietarios (
   pid SERIAL PRIMARY KEY,
   direccion VARCHAR(100),
@@ -38,6 +24,43 @@ CREATE TABLE IF NOT EXISTS terrenos (
   precio VARCHAR(100),
   tipo VARCHAR(100),
   construccion_id INT REFERENCES construcciones(cid)
+);
+
+CREATE TABLE IF NOT EXISTS predios(
+  id SERIAL PRIMARY KEY,
+  nombre VARCHAR(100),
+  precio VARCHAR(100),
+  departamento VARCHAR(100),
+  municipio VARCHAR(100),
+  propietario_id INT REFERENCES propietarios(pid),
+  construccion_id INT REFERENCES construcciones(cid),
+  -- Use this to optional reference nullable foreign key
+  terreno_id INT,
+  FOREIGN KEY (terreno_id) REFERENCES terrenos(tid),
+  created_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO propietarios(
+  direccion, telefono, email,tipo
+) VALUES (
+  'Medellin-Colombia',
+  '3003544940',
+  'danielrs9504@gmail.com',
+  'Persona natural'
+);
+
+WITH INSERTED AS (
+  insert INTO construcciones(pisos, area, tipo, direccion)
+  values ( 3, '200', 'Residencial', 'Medellin')
+  on CONFLICT DO NOTHING
+  RETURNING cid
+) INSERT INTO predios(nombre, precio, departamento, municipio, propietario_id, construccion_id)
+values (
+  'nombre', 'precio', 'dpto', 'muni', 1,
+  COALESCE(
+    (SELECT cid FROM INSERTED),
+    (SELECT construccion_id FROM predios WHERE nombre='nombre')
+  )
 );
 
 DROP TABLE construcciones, predios, propietarios, terrenos;
