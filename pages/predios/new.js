@@ -18,12 +18,15 @@ const New = ({ predio, dispatch }) => {
 
   const onFinish = (values) => {
     let newPredio = {
+      construccion_pisos: values.construccion_pisos,
+      construccion_area: values.construccion_area,
+      construccion_tipo: values.construccion_tipo,
+      construccion_direccion: values.construccion_direccion,
       nombre: values.nombre,
       precio: values.precio,
       departamento: values.departamento,
       municipio: values.municipio,
       propietario_id: values.propietario,
-      construccion_id: values.construcciones,
       terreno_id: values.terreno,
     };
 
@@ -119,14 +122,33 @@ const New = ({ predio, dispatch }) => {
       </Form.Item>
 
       <Form.Item
-        label='Construcciones'
-        name='construcciones'
-        rules={[
-          {
-            // required: true,
-            message: 'Ingrese un construcciones',
-          },
-        ]}
+        label='Construcciones Pisos'
+        name='construccion_pisos'
+        rules={[{ message: 'Ingrese un construcciones' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label='Construcciones Area'
+        name='construccion_area'
+        rules={[{ message: 'Ingrese un construcciones' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label='Construcciones Tipo'
+        name='construccion_tipo'
+        rules={[{ message: 'Ingrese un construcciones' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label='Construcciones Direccion'
+        name='construccion_direccion'
+        rules={[{ message: 'Ingrese un construcciones' }]}
       >
         <Input />
       </Form.Item>

@@ -16,6 +16,10 @@ export default async (req, res) => {
       try {
         // Destructure from body
         const {
+          construccion_pisos,
+          construccion_area,
+          construccion_tipo,
+          construccion_direccion,
           nombre,
           precio,
           departamento,
@@ -25,21 +29,39 @@ export default async (req, res) => {
           terreno_id,
         } = body;
 
-        const query =
-          'INSERT INTO predios(nombre, precio, departamento, municipio, propietario_id, construccion_id, terreno_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
+        // const query =
+        //   'INSERT INTO predios(nombre, precio, departamento, municipio, propietario_id, construccion_id, terreno_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
 
         const values = [
+          construccion_pisos,
+          construccion_area,
+          construccion_tipo,
+          construccion_direccion,
           nombre,
           precio,
           departamento,
           municipio,
           propietario_id,
-          construccion_id,
-          terreno_id,
+          // construccion_id,
+          // terreno_id,
         ];
 
-        console.log(values);
+        const query = `WITH INSERTED AS (
+          insert INTO construcciones(pisos, area, tipo, direccion)
+          values ( $1, $2, $3, $4)
+          on CONFLICT DO NOTHING
+          RETURNING cid
+        ) INSERT INTO predios(nombre, precio, departamento, municipio, propietario_id, construccion_id)
+        values (
+          $5, $6, $7, $8, $9,
+          COALESCE(
+            (SELECT cid FROM INSERTED)
+          )
+        ) RETURNING *`;
 
+        // console.log('objeto que llega al post', values);
+
+        // const response = await db.query(query);
         const response = await db.query(query, values);
 
         return res.status(200).json(response.rows[0]);

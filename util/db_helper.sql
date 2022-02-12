@@ -60,7 +60,7 @@ values (
   COALESCE(
     (SELECT cid FROM INSERTED)
   )
-);
+) RETURNING *;
 
 DROP TABLE construcciones, predios, propietarios, terrenos;
 
