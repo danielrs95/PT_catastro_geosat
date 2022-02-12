@@ -20,23 +20,25 @@ export default async (req, res) => {
           precio,
           departamento,
           municipio,
-          propietario,
-          construcciones,
-          terreno,
+          propietario_id,
+          construccion_id,
+          terreno_id,
         } = body;
 
         const query =
-          'INSERT INTO predios(nombre, precio, departamento, municipio, propietario, construcciones, terreno) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
+          'INSERT INTO predios(nombre, precio, departamento, municipio, propietario_id, construccion_id, terreno_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
 
         const values = [
           nombre,
           precio,
           departamento,
           municipio,
-          propietario,
-          construcciones,
-          terreno,
+          propietario_id,
+          construccion_id,
+          terreno_id,
         ];
+
+        console.log(values);
 
         const response = await db.query(query, values);
 

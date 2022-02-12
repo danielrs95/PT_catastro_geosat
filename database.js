@@ -8,7 +8,7 @@ if (!db) {
     password: 'daniel',
     host: 'localhost',
     port: 5432,
-    database: 'predios',
+    database: 'catastros',
   });
 }
 

@@ -22,13 +22,15 @@ const New = ({ predio, dispatch }) => {
       precio: values.precio,
       departamento: values.departamento,
       municipio: values.municipio,
-      propietario: values.propietario,
-      construcciones: values.construcciones,
-      terreno: values.terreno,
+      propietario_id: values.propietario,
+      construccion_id: values.construcciones,
+      terreno_id: values.terreno,
     };
 
+    console.log(newPredio);
+
     dispatch(createPredio(newPredio));
-    router.push('/');
+    // router.push('/');
   };
 
   return (
@@ -108,7 +110,7 @@ const New = ({ predio, dispatch }) => {
         name='propietario'
         rules={[
           {
-            required: true,
+            // required: true,
             message: 'Ingrese un propietario',
           },
         ]}
@@ -121,7 +123,7 @@ const New = ({ predio, dispatch }) => {
         name='construcciones'
         rules={[
           {
-            required: true,
+            // required: true,
             message: 'Ingrese un construcciones',
           },
         ]}
@@ -134,7 +136,7 @@ const New = ({ predio, dispatch }) => {
         name='terreno'
         rules={[
           {
-            required: true,
+            // required: true,
             message: 'Ingrese un terreno',
           },
         ]}
