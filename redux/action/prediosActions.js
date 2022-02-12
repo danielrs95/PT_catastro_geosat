@@ -10,6 +10,11 @@ export const PREDIOS_DETAIL_REQUEST = 'PREDIOS_DETAIL_REQUEST';
 export const PREDIOS_DETAIL_SUCCESS = 'PREDIOS_DETAIL_SUCCESS';
 export const PREDIOS_DETAIL_FAIL = 'PREDIOS_DETAIL_FAIL';
 
+// Update predio constants
+export const PREDIOS_UPDATE_REQUEST = 'PREDIOS_UPDATE_REQUEST';
+export const PREDIOS_UPDATE_SUCCESS = 'PREDIOS_UPDATE_SUCCESS';
+export const PREDIOS_UPDATE_FAIL = 'PREDIOS_UPDATE_FAIL';
+
 // Action creators
 export const listPredios = () => async (dispatch) => {
   try {
@@ -45,6 +50,41 @@ export const listPredioDetails = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PREDIOS_DETAIL_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const updatePredio = (predio) => async (dispatch) => {
+  try {
+    console.log('Predio from action', predio);
+    dispatch({ type: PREDIOS_UPDATE_REQUEST });
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    let { id } = predio;
+
+    const { data } = await axios.put(
+      `http://localhost:3000/api/predios/${id}`,
+      predio,
+      config
+    );
+
+    dispatch({
+      type: PREDIOS_UPDATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PREDIOS_UPDATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

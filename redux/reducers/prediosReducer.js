@@ -5,6 +5,9 @@ import {
   PREDIOS_LIST_FAIL,
   PREDIOS_LIST_REQUEST,
   PREDIOS_LIST_SUCCESS,
+  PREDIOS_UPDATE_FAIL,
+  PREDIOS_UPDATE_REQUEST,
+  PREDIOS_UPDATE_SUCCESS,
 } from '../action/prediosActions';
 
 export const prediosListReducer = (state = {}, action) => {
@@ -31,6 +34,22 @@ export const predioDetailsReducer = (state = {}, action) => {
       return { predio: action.payload };
 
     case PREDIOS_DETAIL_FAIL:
+      return { error: action.payload };
+
+    default:
+      return state;
+  }
+};
+
+export const predioUpdateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PREDIOS_UPDATE_REQUEST:
+      return { ...state };
+
+    case PREDIOS_UPDATE_SUCCESS:
+      return { predio: action.payload };
+
+    case PREDIOS_UPDATE_FAIL:
       return { error: action.payload };
 
     default:

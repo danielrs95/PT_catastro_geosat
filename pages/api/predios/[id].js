@@ -29,6 +29,8 @@ export default async (req, res) => {
           terreno,
         } = body;
 
+        console.log(query);
+
         const text =
           'UPDATE predios SET nombre = $1, precio = $2, departamento = $3, municipio = $4, propietario = $5, construcciones = $6, terreno = $7 WHERE id = $8 RETURNING *';
 

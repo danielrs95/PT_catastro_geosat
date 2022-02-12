@@ -3,6 +3,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import {
   predioDetailsReducer,
   prediosListReducer,
+  predioUpdateReducer,
 } from './reducers/prediosReducer';
 import thunkMiddleware from 'redux-thunk';
 
@@ -17,6 +18,7 @@ const bindMiddleware = (middleware) => {
 const combinedReducer = combineReducers({
   prediosList: prediosListReducer,
   predioDetails: predioDetailsReducer,
+  predioUpdate: predioUpdateReducer,
 });
 
 const reducer = (state, action) => {

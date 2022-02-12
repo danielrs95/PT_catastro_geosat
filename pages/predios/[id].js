@@ -1,55 +1,43 @@
 import { Form, Input, Button } from 'antd';
 import axios from 'axios';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { listPredioDetails } from '../../redux/action/prediosActions';
+import { bindActionCreators } from 'redux';
+import {
+  listPredioDetails,
+  updatePredio,
+} from '../../redux/action/prediosActions';
 import { wrapper } from '../../redux/store';
 
-const Edit = ({ predio }) => {
-  // console.log(predio);
-  // const [form] = Form.useForm();
+const Edit = ({ predio, dispatch }) => {
+  const onFinish = (values) => {
+    // console.log('Success:', values);
 
-  // form.setFields({
-  //   nombre: predio.name,
-  // });
+    let updatedPredio = {
+      ...predio,
+      nombre: values.nombre,
+      precio: values.precio,
+      departamento: values.departamento,
+      municipio: values.municipio,
+      propietario: values.propietario,
+      construcciones: values.construcciones,
+      terreno: values.terreno,
+    };
+    // console.log(updatedPredio);
 
-  // useEffect(() => {
-  //   form.resetFields();
+    dispatch(updatePredio(updatedPredio));
 
-  //   form.setFieldsValue({
-  //     nombre: predio.nombre,
-  //   });
-  // }, []);
+    // update(updatedPredio);
+  };
 
-  // return (
-  //   <Form form={form} name='edit_data_form'>
-  //     <Form.Item name='nombre'>
-  //       <Input />
-  //     </Form.Item>
-
-  //     <Form.Item name='precio'>
-  //       <Input />
-  //     </Form.Item>
-
-  //     <Form.Item>
-  //       <Button
-  //         className='button'
-  //         type='primary'
-  //         htmlType='submit'
-  //         disabled={
-  //           form.getFieldsError().filter(({ errors }) => errors.length).length
-  //         }
-  //       >
-  //         Submit
-  //       </Button>
-  //     </Form.Item>
-  //   </Form>
-  // );
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+  };
 
   return (
     <Form
-      // name='basic'
+      onFinish={onFinish}
       labelCol={{
         span: 8,
       }}
@@ -57,23 +45,25 @@ const Edit = ({ predio }) => {
         span: 16,
       }}
       initialValues={{
-        // nombre: 'test',
         nombre: predio.nombre,
-        precio: 'test',
+        precio: predio.precio,
+        departamento: predio.departamento,
+        municipio: predio.municipio,
+        propietario: predio.propietario,
+        construcciones: predio.construcciones,
+        terreno: predio.terreno,
       }}
       autoComplete='off'
     >
       <Form.Item
         label='Nombre'
         name='nombre'
-        // initialValue={predio.name}
         rules={[
           {
             required: true,
-            message: 'Please input your username!',
+            message: 'Ingrese un nombre',
           },
         ]}
-        // value='test'
       >
         <Input />
       </Form.Item>
@@ -84,7 +74,72 @@ const Edit = ({ predio }) => {
         rules={[
           {
             required: true,
-            message: 'Please input your password!',
+            message: 'Ingrese un precio',
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label='Departamento'
+        name='departamento'
+        rules={[
+          {
+            required: true,
+            message: 'Ingrese un departamento',
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label='Municipio'
+        name='municipio'
+        rules={[
+          {
+            required: true,
+            message: 'Ingrese un municipio',
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label='Propietario'
+        name='propietario'
+        rules={[
+          {
+            required: true,
+            message: 'Ingrese un propietario',
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label='Construcciones'
+        name='construcciones'
+        rules={[
+          {
+            required: true,
+            message: 'Ingrese un construcciones',
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label='Terreno'
+        name='terreno'
+        rules={[
+          {
+            required: true,
+            message: 'Ingrese un terreno',
           },
         ]}
       >
@@ -100,32 +155,19 @@ const Edit = ({ predio }) => {
         <Button type='primary' htmlType='submit'>
           Submit
         </Button>
+
+        <Button type='link' href='/'>
+          Volver
+        </Button>
       </Form.Item>
     </Form>
   );
 };
 
-// export const getStaticPaths = async () => {
-//    const posts = await // your database query or fetch to remote API
-
-//    // generate the paths
-//    const paths = posts.map(post => ({
-//         params: { id: post.id } // keep in mind if post.id is a number you need to stringify post.id
-//       })
-//    );
-
-//    return {
-//       paths,
-//       fallback: true
-//    }
-
-//  }
-
 export const getStaticPaths = async () => {
   const { data } = await axios.get('http://localhost:3000/api/predios/'); // your database query or fetch to remote API
 
   // console.log(data);
-
   // generate the paths
   const paths = data.map((predio) => ({
     params: { id: JSON.stringify(predio.id) }, // keep in mind if post.id is a number you need to stringify post.id
@@ -151,7 +193,13 @@ export const getStaticProps = wrapper.getStaticProps((store) =>
 
 const mapStateToProps = (state) => {
   return {
-    predio: state.predioDetails,
+    predio: state.predioDetails.predio,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    update: bindActionCreators(updatePredio, dispatch),
   };
 };
 
