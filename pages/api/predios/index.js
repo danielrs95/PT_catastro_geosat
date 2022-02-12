@@ -20,6 +20,10 @@ export default async (req, res) => {
           construccion_area,
           construccion_tipo,
           construccion_direccion,
+          propietario_direccion,
+          propietario_telefono,
+          propietario_email,
+          propietario_tipo,
           nombre,
           precio,
           departamento,
@@ -37,11 +41,15 @@ export default async (req, res) => {
           construccion_area,
           construccion_tipo,
           construccion_direccion,
+          propietario_direccion,
+          propietario_telefono,
+          propietario_email,
+          propietario_tipo,
           nombre,
           precio,
           departamento,
           municipio,
-          propietario_id,
+          // propietario_id,
           // construccion_id,
           // terreno_id,
         ];
@@ -51,9 +59,17 @@ export default async (req, res) => {
           values ( $1, $2, $3, $4)
           on CONFLICT DO NOTHING
           RETURNING cid
+        ), new_user AS(
+          INSERT INTO propietarios(direccion, telefono, email,tipo)
+          VALUES ($5, $6, $7, $8)
+          ON CONFLICT DO NOTHING
+          RETURNING pid
         ) INSERT INTO predios(nombre, precio, departamento, municipio, propietario_id, construccion_id)
         values (
-          $5, $6, $7, $8, $9,
+          $9, $10, $11, $12,
+          COALESCE(
+            (SELECT pid from new_user)
+          ),
           COALESCE(
             (SELECT cid FROM INSERTED)
           )

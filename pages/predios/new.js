@@ -22,11 +22,14 @@ const New = ({ predio, dispatch }) => {
       construccion_area: values.construccion_area,
       construccion_tipo: values.construccion_tipo,
       construccion_direccion: values.construccion_direccion,
+      propietario_direccion: values.propietario_direccion,
+      propietario_telefono: values.propietario_telefono,
+      propietario_email: values.propietario_email,
+      propietario_tipo: values.propietario_direccion,
       nombre: values.nombre,
       precio: values.precio,
       departamento: values.departamento,
       municipio: values.municipio,
-      propietario_id: values.propietario,
       terreno_id: values.terreno,
     };
 
@@ -109,14 +112,33 @@ const New = ({ predio, dispatch }) => {
       </Form.Item>
 
       <Form.Item
-        label='Propietario'
-        name='propietario'
-        rules={[
-          {
-            // required: true,
-            message: 'Ingrese un propietario',
-          },
-        ]}
+        label='Propietario Direccion'
+        name='propietario_direccion'
+        rules={[{ message: 'Ingrese un propietario' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label='Propietario Telefono'
+        name='propietario_telefono'
+        rules={[{ message: 'Ingrese un propietario' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label='Propietario Email'
+        name='propietario_email'
+        rules={[{ message: 'Ingrese un propietario' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label='Propietario Tipo'
+        name='propietario_tipo'
+        rules={[{ message: 'Ingrese un propietario' }]}
       >
         <Input />
       </Form.Item>
