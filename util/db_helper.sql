@@ -71,7 +71,7 @@ WITH new_a AS (
   WHERE id = 1
 )
 UPDATE construcciones
-  SET c_pisos = '110'
+  SET c_pisos = '$5', c_area = '$6', c_tipo = '$7', c_direccion = '$8'
 WHERE cid = 1;
 
 SELECT * FROM predios NATURAL JOIN propietarios, construcciones;

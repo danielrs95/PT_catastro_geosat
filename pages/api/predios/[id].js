@@ -34,14 +34,32 @@ export default async (req, res) => {
           p_email,
           p_tipo,
           terreno,
+          construccion_id,
         } = body;
 
         // console.log(query);
 
-        const text =
-          'UPDATE predios SET nombre = $1, precio = $2, departamento = $3, municipio = $4 WHERE id = $5 RETURNING *';
+        const text = `WITH new_a AS (
+            UPDATE predios
+              SET nombre = $1, precio = $2, departamento = $3, municipio = $4
+            WHERE id = $9
+          )
+            UPDATE construcciones
+              SET c_pisos = $5, c_area = $6, c_tipo = $7, c_direccion = $8
+            WHERE cid = $10;`;
 
-        const values = [nombre, precio, departamento, municipio, query.id];
+        const values = [
+          nombre,
+          precio,
+          departamento,
+          municipio,
+          c_pisos,
+          c_area,
+          c_tipo,
+          c_direccion,
+          query.id,
+          construccion_id,
+        ];
 
         const result = await db.query(text, values);
         return res.json(result.rows[0]);
