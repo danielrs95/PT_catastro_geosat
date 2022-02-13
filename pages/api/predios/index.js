@@ -7,7 +7,7 @@ export default async (req, res) => {
     case 'GET':
       try {
         const query =
-          'SELECT * FROM predios NATURAL JOIN propietarios, construcciones;';
+          'SELECT DISTINCT id, nombre, precio, departamento, municipio FROM predios NATURAL JOIN propietarios, construcciones;';
         const response = await db.query(query);
         return res.json(response.rows);
       } catch (error) {
@@ -15,15 +15,8 @@ export default async (req, res) => {
       }
     case 'POST':
       try {
-        // console.log('consolelog body', body);
-
-        // const query =
-        //   'INSERT INTO predios(nombre, precio, departamento, municipio, propietario_id, construccion_id, terreno_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
-
-        // const client = await db.connect();
         await db.query('BEGIN');
 
-        // Insert to propietarios
         const queryText =
           'INSERT INTO propietarios(p_direccion, p_telefono, p_email, p_tipo) VALUES($1, $2, $3, $4) RETURNING pid;';
         const response = await db.query(queryText, [
@@ -66,25 +59,8 @@ export default async (req, res) => {
         await db.query('COMMIT');
 
         return res.status(200).json(response4.rows[0]);
-
-        // let values = [
-        //   body.p_direccion,
-        //   body.nombre,
-        //   body.precio,
-        //   body.departamento,
-        //   body.municipio,
-        //   body.propietario_id,
-        //   body.construccion_id,
-        //   body.terreno_id,
-        // ];
-
-        // console.log('objeto que llega al post', values);
-        // const response = await db.query(query);
-        // const response = await db.query(query, values);
-        // console.log('response del put a /api/predios', response.row[0]);
       } catch (error) {
         await db.query('ROLLBACK');
-        // return res.status(400).json({ message: error.message });
         throw error;
       }
 

@@ -3,7 +3,7 @@
 DROP TABLE construcciones, predios, propietarios, terrenos;
 
 CREATE TABLE IF NOT EXISTS propietarios (
-  pid SERIAL PRIMARY KEY,
+  pid SERIAL PRIMARY KEY UNIQUE,
   p_direccion VARCHAR(100) NOT NULL,
   p_telefono VARCHAR(100) NOT NULL,
   p_email VARCHAR(100) NOT NULL,
