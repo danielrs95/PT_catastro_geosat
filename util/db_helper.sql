@@ -80,6 +80,7 @@ WHERE cid = 1;
 
 SELECT * FROM predios NATURAL JOIN propietarios, construcciones;
 
+
 INSERT INTO propietarios(
   direccion, telefono, email,tipo
 ) VALUES (

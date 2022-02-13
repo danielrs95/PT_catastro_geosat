@@ -49,6 +49,7 @@ export const resolvers = {
     },
     getPredio: async (_, args) => {
       try {
+        console.log('Console log desde getPredio()', args);
         const predio = await axios.get(
           `http://localhost:3000/api/predios/${args.id}`
         );
@@ -56,6 +57,47 @@ export const resolvers = {
           id: predio.data.id,
           nombre: predio.data.nombre,
           precio: predio.data.precio,
+        };
+      } catch (error) {
+        throw error;
+      }
+    },
+  },
+
+  // Mutations
+  Mutation: {
+    createPredio: async (_, args) => {
+      try {
+        console.log('Console log desde createPredio', args);
+
+        // Hardcoded object for testing
+        const data_sample = {
+          c_pisos: 'graphql',
+          c_area: 'graphql',
+          c_tipo: 'graphql',
+          c_direccion: 'graphql',
+          p_direccion: 'graphql',
+          p_telefono: 'graphql',
+          p_email: 'graphql',
+          p_tipo: 'graphql',
+          nombre: 'graphql',
+          precio: 'graphql',
+          departamento: 'graphql',
+          municipio: 'graphql',
+        };
+
+        // Destructure data from response
+        const { data } = await axios.post(
+          `http://localhost:3000/api/predios/`,
+          data_sample
+        );
+
+        console.log('DATA desde create graphql', data);
+        return {
+          nombre: data.nombre,
+          precio: data.precio,
+          precio: data.precio,
+          departamento: data.departamento,
         };
       } catch (error) {
         throw error;

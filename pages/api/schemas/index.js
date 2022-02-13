@@ -33,14 +33,18 @@ export const typeDefs = gql`
     precio: String
     departamento: String
     municipio: String
-    propietario: Propietario!
-    construcciones: [Construccion!]!
-    terrenos: Terreno!
+    propietario: Propietario
+    construcciones: [Construccion]
+    terrenos: Terreno
   }
 
   type Query {
     getPredios: [Predio]
     getPredio(id: ID!): Predio!
+  }
+
+  type Mutation {
+    createPredio(nombre: String): Predio!
   }
 `;
 
