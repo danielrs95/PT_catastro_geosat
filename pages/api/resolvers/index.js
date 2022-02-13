@@ -17,6 +17,10 @@ export const resolvers = {
             p_telefono,
             p_email,
             p_tipo,
+            c_pisos,
+            c_area,
+            c_tipo,
+            c_direccion,
           }) => ({
             id,
             nombre,
@@ -29,6 +33,14 @@ export const resolvers = {
               email: p_email,
               tipo: p_tipo,
             },
+            construcciones: [
+              {
+                pisos: c_pisos,
+                area: c_area,
+                tipo: c_tipo,
+                direccion: c_direccion,
+              },
+            ],
           })
         );
       } catch (error) {

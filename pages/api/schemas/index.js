@@ -33,9 +33,9 @@ export const typeDefs = gql`
     precio: String
     departamento: String
     municipio: String
-    propietario: Propietario
+    propietario: Propietario!
     construcciones: [Construccion!]!
-    terrenos: [Terreno!]!
+    terrenos: Terreno!
   }
 
   type Query {

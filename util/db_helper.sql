@@ -13,11 +13,11 @@ CREATE TABLE IF NOT EXISTS propietarios (
 
 CREATE TABLE IF NOT EXISTS construcciones (
   cid SERIAL PRIMARY KEY,
-  pisos VARCHAR(100),
-  area VARCHAR(100),
+  c_pisos VARCHAR(100),
+  c_area VARCHAR(100),
   -- Should be later 3 predefined values Industrial, Comercial o Residencial
-  tipo VARCHAR(100),
-  direccion VARCHAR(100)
+  c_tipo VARCHAR(100),
+  c_direccion VARCHAR(100)
 );
 
 CREATE TABLE IF NOT EXISTS terrenos (
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS predios(
 
 -- Insert construcciones, propietarios & predios in 1 operation
 WITH INSERTED AS (
-  insert INTO construcciones(pisos, area, tipo, direccion)
+  insert INTO construcciones(c_pisos, c_area, c_tipo, c_direccion)
   values ( '3', '200', 'Residencial', 'Medellin')
   on CONFLICT DO NOTHING
   RETURNING cid
