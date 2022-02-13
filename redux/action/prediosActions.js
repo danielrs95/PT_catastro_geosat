@@ -78,6 +78,8 @@ export const updatePredio = (predio) => async (dispatch) => {
       predio
     );
 
+    console.log('data action update', data);
+
     dispatch({
       type: PREDIOS_UPDATE_SUCCESS,
       payload: data,
@@ -121,6 +123,7 @@ export const createPredio = (predio) => async (dispatch) => {
       `http://localhost:3000/api/predios/`,
       predio
     );
+    console.log('data actions create', data);
     dispatch({
       type: PREDIOS_CREATE_SUCCESS,
       payload: data,

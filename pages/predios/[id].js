@@ -13,7 +13,7 @@ import {
 import { wrapper } from '../../redux/store';
 
 const Edit = ({ predio, dispatch }) => {
-  console.log(predio);
+  // console.log(predio);
   const router = useRouter();
 
   const onFinish = (values) => {
@@ -38,12 +38,12 @@ const Edit = ({ predio, dispatch }) => {
     // console.log(updatedPredio);
 
     dispatch(updatePredio(updatedPredio));
-    router.push('/');
+    // router.push('/');
   };
 
   const onDeletedHandler = (predio) => {
     dispatch(deletePredio(predio));
-    router.push('/');
+    // router.push('/');
   };
 
   return (

@@ -6,7 +6,7 @@ const columns = [
     dataIndex: 'nombre',
     key: 'nombre',
     render: (text, predio) => (
-      <Link href={'predios/' + predio.id}>
+      <Link href={'/predios/' + predio.id}>
         <a>{text}</a>
       </Link>
     ),
@@ -44,7 +44,7 @@ const columns = [
 ];
 
 const TableAnt = ({ data }) => {
-  return <Table columns={columns} dataSource={data} />;
+  return <Table rowKey='id' columns={columns} dataSource={data} />;
 };
 
 export default TableAnt;

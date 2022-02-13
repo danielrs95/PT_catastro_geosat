@@ -31,7 +31,7 @@ const New = ({ predio, dispatch }) => {
     console.log('Log desde new.js', newPredio);
 
     dispatch(createPredio(newPredio));
-    router.push('/');
+    // router.push('/');
   };
 
   return (

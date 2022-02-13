@@ -38,7 +38,7 @@ export default async (req, res) => {
           construccion_id,
         } = body;
 
-        console.log(query);
+        // console.log(query);
 
         const text = `WITH new_a AS (
             UPDATE predios

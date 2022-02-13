@@ -72,7 +72,7 @@ export const resolvers = {
 
         // Hardcoded object for testing
         const data_sample = {
-          c_pisos: 'graphql',
+          // c_pisos: 'graphql',
           c_area: 'graphql',
           c_tipo: 'graphql',
           c_direccion: 'graphql',
@@ -80,7 +80,7 @@ export const resolvers = {
           p_telefono: 'graphql',
           p_email: 'graphql',
           p_tipo: 'graphql',
-          nombre: 'graphql',
+          nombre: args.nombre,
           precio: 'graphql',
           departamento: 'graphql',
           municipio: 'graphql',
@@ -96,8 +96,16 @@ export const resolvers = {
         return {
           nombre: data.nombre,
           precio: data.precio,
-          precio: data.precio,
           departamento: data.departamento,
+          municipio: data.municipio,
+          propietario: {
+            id: data.propietario_id,
+          },
+          construcciones: [
+            {
+              id: data.construccion_id,
+            },
+          ],
         };
       } catch (error) {
         throw error;

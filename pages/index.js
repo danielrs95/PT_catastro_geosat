@@ -28,7 +28,7 @@ const Home = ({ predios }) => {
         <Col xs={18}>
           <Header></Header>
           <Content>
-            <Link href='predios/new/'>
+            <Link href='/predios/new/'>
               <a>Nuevo predio</a>
             </Link>
             <p>Tabla for catastros</p>

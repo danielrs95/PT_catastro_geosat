@@ -55,7 +55,7 @@ WITH INSERTED AS (
   RETURNING pid
 ) INSERT INTO predios(nombre, precio, departamento, municipio, propietario_id, construccion_id)
 values (
-  'nombre', 'precio', 'dpto', 'muni',
+  'Seeder', 'Seeder', 'Seeder', 'Seeder',
   COALESCE(
     (SELECT pid from new_user)
   ),
