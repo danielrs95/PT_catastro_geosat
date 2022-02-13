@@ -5,22 +5,45 @@ export const resolvers = {
     getPredios: async () => {
       try {
         const predios = await axios.get('http://localhost:3000/api/predios/');
-        return predios.data.map(({ id, nombre, precio }) => ({
-          id,
-          nombre,
-          precio,
-        }));
+        console.log('Console desde query', predios.data);
+        return predios.data.map(
+          ({
+            id,
+            nombre,
+            precio,
+            departamento,
+            municipio,
+            p_direccion,
+            p_telefono,
+            p_email,
+            p_tipo,
+          }) => ({
+            id,
+            nombre,
+            precio,
+            departamento,
+            municipio,
+            propietario: {
+              direccion: p_direccion,
+              telefono: p_telefono,
+              email: p_email,
+              tipo: p_tipo,
+            },
+          })
+        );
       } catch (error) {
         throw error;
       }
     },
     getPredio: async (_, args) => {
       try {
-        const user = await axios.get(`http://localhost:3000/api/predios/4`);
+        const predio = await axios.get(
+          `http://localhost:3000/api/predios/${args.id}`
+        );
         return {
-          id: user.data.id,
-          nombre: user.data.nombre,
-          precio: user.data.precio,
+          id: predio.data.id,
+          nombre: predio.data.nombre,
+          precio: predio.data.precio,
         };
       } catch (error) {
         throw error;

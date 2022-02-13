@@ -5,12 +5,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {
-  createPredio,
-  deletePredio,
-  listPredioDetails,
-  updatePredio,
-} from '../../redux/action/prediosActions';
+import { createPredio } from '../../redux/action/prediosActions';
 import { wrapper } from '../../redux/store';
 
 const New = ({ predio, dispatch }) => {
@@ -33,10 +28,10 @@ const New = ({ predio, dispatch }) => {
       terreno_id: values.terreno,
     };
 
-    console.log(newPredio);
+    console.log('Log desde new.js', newPredio);
 
     dispatch(createPredio(newPredio));
-    // router.push('/');
+    router.push('/');
   };
 
   return (
