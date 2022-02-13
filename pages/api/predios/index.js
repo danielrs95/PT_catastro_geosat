@@ -25,17 +25,13 @@ export default async (req, res) => {
 
         // Insert to propietarios
         const queryText =
-          'INSERT INTO propietarios(p_direccion, p_telefono, p_email, p_tipo) VALUES($1, $2, $3, $4) RETURNING *;';
+          'INSERT INTO propietarios(p_direccion, p_telefono, p_email, p_tipo) VALUES($1, $2, $3, $4) RETURNING pid;';
         const response = await db.query(queryText, [
           'Medellin-Colombia',
           '3003544940',
           'danielrs9504@gmail.com',
           'Persona natural',
         ]);
-
-        // console.log(response.rows[0]);
-        // console.log(res2);
-        // console.log(res3);
 
         const queryText2 =
           'INSERT INTO construcciones(c_pisos, c_area, c_tipo, c_direccion) VALUES($1, $2, $3, $4) RETURNING cid;';
@@ -47,7 +43,7 @@ export default async (req, res) => {
         ]);
 
         const queryText3 =
-          'INSERT INTO terrenos(t_area, t_precio, t_tipo, construccion_id) VALUES($1, $2, $3, $4) RETURNING *;';
+          'INSERT INTO terrenos(t_area, t_precio, t_tipo, construccion_id) VALUES($1, $2, $3, $4) RETURNING tid;';
         const response3 = await db.query(queryText3, [
           '100m2',
           '434mil',
@@ -55,9 +51,21 @@ export default async (req, res) => {
           response2.rows[0].cid,
         ]);
 
+        const queryText4 =
+          'INSERT INTO predios(nombre, precio, departamento, municipio, propietario_id, construccion_id, terreno_id) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *;';
+        const response4 = await db.query(queryText4, [
+          'Predio Hardcoded',
+          'Predio Hardcoded',
+          'Predio Hardcoded',
+          'Predio Hardcoded',
+          response.rows[0].pid,
+          response2.rows[0].cid,
+          response3.rows[0].tid,
+        ]);
+
         await db.query('COMMIT');
 
-        return res.status(200).json(response3.rows[0]);
+        return res.status(200).json(response4.rows[0]);
 
         // let values = [
         //   body.p_direccion,
