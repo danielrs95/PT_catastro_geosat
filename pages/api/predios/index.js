@@ -15,30 +15,69 @@ export default async (req, res) => {
       }
     case 'POST':
       try {
-        console.log('consolelog body', body);
+        // console.log('consolelog body', body);
 
-        const query =
-          'INSERT INTO predios(nombre, precio, departamento, municipio, propietario_id, construccion_id, terreno_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
+        // const query =
+        //   'INSERT INTO predios(nombre, precio, departamento, municipio, propietario_id, construccion_id, terreno_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
 
-        let values = [
-          body.nombre,
-          body.precio,
-          body.departamento,
-          body.municipio,
-          body.propietario_id,
-          body.construccion_id,
-          body.terreno_id,
-        ];
+        // const client = await db.connect();
+        await db.query('BEGIN');
 
-        console.log('objeto que llega al post', values);
+        // Insert to propietarios
+        const queryText =
+          'INSERT INTO propietarios(p_direccion, p_telefono, p_email, p_tipo) VALUES($1, $2, $3, $4) RETURNING *;';
+        const response = await db.query(queryText, [
+          'Medellin-Colombia',
+          '3003544940',
+          'danielrs9504@gmail.com',
+          'Persona natural',
+        ]);
+
+        // console.log(response.rows[0]);
+        // console.log(res2);
+        // console.log(res3);
+
+        const queryText2 =
+          'INSERT INTO construcciones(c_pisos, c_area, c_tipo, c_direccion) VALUES($1, $2, $3, $4) RETURNING cid;';
+        const response2 = await db.query(queryText2, [
+          '3',
+          '200m2',
+          'Residencial',
+          'Medellin-Colombia',
+        ]);
+
+        const queryText3 =
+          'INSERT INTO terrenos(t_area, t_precio, t_tipo, construccion_id) VALUES($1, $2, $3, $4) RETURNING *;';
+        const response3 = await db.query(queryText3, [
+          '100m2',
+          '434mil',
+          'comercial',
+          response2.rows[0].cid,
+        ]);
+
+        await db.query('COMMIT');
+
+        return res.status(200).json(response3.rows[0]);
+
+        // let values = [
+        //   body.p_direccion,
+        //   body.nombre,
+        //   body.precio,
+        //   body.departamento,
+        //   body.municipio,
+        //   body.propietario_id,
+        //   body.construccion_id,
+        //   body.terreno_id,
+        // ];
+
+        // console.log('objeto que llega al post', values);
         // const response = await db.query(query);
-        const response = await db.query(query, values);
-
-        console.log('response del put a /api/predios', response.row[0]);
-
-        return res.status(200).json(response.rows[0]);
+        // const response = await db.query(query, values);
+        // console.log('response del put a /api/predios', response.row[0]);
       } catch (error) {
-        return res.status(400).json({ message: error.message });
+        await db.query('ROLLBACK');
+        // return res.status(400).json({ message: error.message });
+        throw error;
       }
 
     default:
