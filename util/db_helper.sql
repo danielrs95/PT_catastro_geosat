@@ -4,42 +4,66 @@ DROP TABLE construcciones, predios, propietarios, terrenos;
 
 CREATE TABLE IF NOT EXISTS propietarios (
   pid SERIAL PRIMARY KEY,
-  p_direccion VARCHAR(100),
-  p_telefono VARCHAR(100),
-  p_email VARCHAR(100),
+  p_direccion VARCHAR(100) NOT NULL,
+  p_telefono VARCHAR(100) NOT NULL,
+  p_email VARCHAR(100) NOT NULL,
   -- Should be later 2 predefined values Natural/Juridica
-  p_tipo VARCHAR(100)
+  p_tipo VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS construcciones (
   cid SERIAL PRIMARY KEY,
-  c_pisos VARCHAR(100),
-  c_area VARCHAR(100),
+  c_pisos VARCHAR(100) NOT NULL,
+  c_area VARCHAR(100) NOT NULL,
   -- Should be later 3 predefined values Industrial, Comercial o Residencial
-  c_tipo VARCHAR(100),
-  c_direccion VARCHAR(100)
+  c_tipo VARCHAR(100) NOT NULL,
+  c_direccion VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS terrenos (
   tid SERIAL PRIMARY KEY,
-  area VARCHAR(100),
-  precio VARCHAR(100),
-  tipo VARCHAR(100),
+  t_area VARCHAR(100) NOT NULL,
+  t_precio VARCHAR(100) NOT NULL,
+  t_tipo VARCHAR(100) NOT NULL,
   construccion_id INT REFERENCES construcciones(cid)
 );
 
 CREATE TABLE IF NOT EXISTS predios(
   id SERIAL PRIMARY KEY,
-  nombre VARCHAR(100),
-  precio VARCHAR(100),
-  departamento VARCHAR(100),
-  municipio VARCHAR(100),
+  nombre VARCHAR(100) NOT NULL,
+  precio VARCHAR(100) NOT NULL,
+  departamento VARCHAR(100) NOT NULL,
+  municipio VARCHAR(100) NOT NULL,
   propietario_id INT REFERENCES propietarios(pid),
   construccion_id INT REFERENCES construcciones(cid),
   -- Use this to optional reference nullable foreign key
   terreno_id INT,
   FOREIGN KEY (terreno_id) REFERENCES terrenos(tid),
   created_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO propietarios(
+  p_direccion, p_telefono, p_email, p_tipo
+) VALUES (
+  'Medellin-Colombia',
+  '3003544940',
+  'danielrs9504@gmail.com',
+  'Persona natural'
+);
+
+INSERT INTO construcciones(
+  c_pisos, c_area, c_tipo, c_direccion
+) VALUES (
+  '3',
+  '200m2',
+  'Residencial',
+  'Medellin-Colombia'
+);
+
+INSERT INTO terrenos(
+  t_area, t_precio, t_tipo, construccion_id
+) VALUES (
+  '100m2', '434mil', 'comercial', 1
 );
 
 -- Insert construcciones, propietarios & predios in 1 operation

@@ -32,8 +32,25 @@ const Home = ({ predios }) => {
               <a>Nuevo predio</a>
             </Link>
             <p>Tabla for catastros</p>
-            <TableAnt data={predios} />
+            {/* <TableAnt data={predios} /> */}
           </Content>
+
+          <table>
+            <thead>
+              <tr>
+                <th>NOMBRE</th>
+                <th>PRECIO</th>
+              </tr>
+            </thead>
+            <tbody>
+              {predios.map((predio, key) => (
+                <tr key={key}>
+                  <td>{predio.nombre}</td>
+                  <td>{predio.precio}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
           <Footer>Footer</Footer>
         </Col>
@@ -52,7 +69,7 @@ export const getStaticProps = wrapper.getStaticProps(
 
 const mapStateToProps = (state) => {
   return {
-    predios: state.prediosList.predios,
+    predios: state.prediosList,
   };
 };
 

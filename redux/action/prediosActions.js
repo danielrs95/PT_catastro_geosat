@@ -30,7 +30,7 @@ export const listPredios = () => async (dispatch) => {
   try {
     dispatch({ type: PREDIOS_LIST_REQUEST });
 
-    const { data } = await axios.get('http://localhost:3000/api/predios/');
+    const { data } = await axios.get('http://localhost:3000/api/predios');
     // console.log(data);
 
     dispatch({
@@ -115,14 +115,13 @@ export const deletePredio = (predio) => async (dispatch) => {
   }
 };
 
-export const createPredio = (predio) => async (dispatch) => {
+export const createPredio = () => async (dispatch) => {
   try {
-    console.log('Log desde action', predio);
+    // console.log('Log desde action', predio);
     dispatch({ type: PREDIOS_CREATE_REQUEST });
-    const { data } = await axios.post(
-      `http://localhost:3000/api/predios/`,
-      predio
-    );
+    const { data } = await axios.post(`http://localhost:3000/api/predios`, {
+      nombre: 'Hard coded action',
+    });
     console.log('data actions create', data);
     dispatch({
       type: PREDIOS_CREATE_SUCCESS,

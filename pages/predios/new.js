@@ -193,9 +193,9 @@ const New = ({ predio, dispatch }) => {
           Submit
         </Button>
 
-        <Button type='link' href='/'>
-          Volver
-        </Button>
+        <Link href='/'>
+          <a>Regresar</a>
+        </Link>
       </Form.Item>
     </Form>
   );

@@ -19,10 +19,10 @@ const bindMiddleware = (middleware) => {
 
 const combinedReducer = combineReducers({
   prediosList: prediosListReducer,
-  predioDetails: predioDetailsReducer,
-  predioUpdate: predioUpdateReducer,
-  predioDelete: predioDeleteReducer,
-  predioCreate: predioCreateReducer,
+  // predioDetails: predioDetailsReducer,
+  // predioUpdate: predioUpdateReducer,
+  // predioDelete: predioDeleteReducer,
+  // predioCreate: predioCreateReducer,
 });
 
 const reducer = (state, action) => {

@@ -19,10 +19,10 @@ import {
 export const prediosListReducer = (state = {}, action) => {
   switch (action.type) {
     case PREDIOS_LIST_REQUEST:
-      return { predios: [] };
+      return { loading: true };
 
     case PREDIOS_LIST_SUCCESS:
-      return { predios: action.payload };
+      return action.payload;
 
     case PREDIOS_LIST_FAIL:
       return { error: action.payload };
@@ -82,7 +82,7 @@ export const predioDeleteReducer = (state = {}, action) => {
 export const predioCreateReducer = (state = {}, action) => {
   switch (action.type) {
     case PREDIOS_CREATE_REQUEST:
-      return { ...state };
+      return { loading: true };
 
     case PREDIOS_CREATE_SUCCESS:
       return { predio: action.payload };
