@@ -6,8 +6,10 @@ export default async (req, res) => {
   switch (method) {
     case 'GET':
       try {
-        const query =
-          'SELECT DISTINCT id, nombre, precio, departamento, municipio FROM predios NATURAL JOIN propietarios, construcciones;';
+        const query = 'select * from predios natural join propietarios;';
+
+        // const query =
+        //   'SELECT DISTINCT id, nombre, precio, departamento, municipio, propietario_id, construccion_id, terreno_id FROM predios NATURAL JOIN propietarios, construcciones;';
         const response = await db.query(query);
         return res.json(response.rows);
       } catch (error) {
@@ -20,27 +22,27 @@ export default async (req, res) => {
         const queryText =
           'INSERT INTO propietarios(p_direccion, p_telefono, p_email, p_tipo) VALUES($1, $2, $3, $4) RETURNING pid;';
         const response = await db.query(queryText, [
-          'Medellin-Colombia',
-          '3003544940',
-          'danielrs9504@gmail.com',
-          'Persona natural',
+          body.p_direccion,
+          body.p_telefono,
+          body.p_email,
+          body.p_tipo,
         ]);
 
         const queryText2 =
           'INSERT INTO construcciones(c_pisos, c_area, c_tipo, c_direccion) VALUES($1, $2, $3, $4) RETURNING cid;';
         const response2 = await db.query(queryText2, [
-          '3',
-          '200m2',
-          'Residencial',
-          'Medellin-Colombia',
+          body.c_pisos,
+          body.c_area,
+          body.c_area,
+          body.c_direccion,
         ]);
 
         const queryText3 =
           'INSERT INTO terrenos(t_area, t_precio, t_tipo, construccion_id) VALUES($1, $2, $3, $4) RETURNING tid;';
         const response3 = await db.query(queryText3, [
-          '100m2',
-          '434mil',
-          'comercial',
+          body.t_area,
+          body.t_precio,
+          body.t_tipo,
           response2.rows[0].cid,
         ]);
 

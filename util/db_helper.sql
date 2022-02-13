@@ -9,10 +9,12 @@ CREATE TABLE IF NOT EXISTS propietarios (
   p_email VARCHAR(100) NOT NULL,
   -- Should be later 2 predefined values Natural/Juridica
   p_tipo VARCHAR(100) NOT NULL
+  id INT NOT NULL,
+  FOREIGN KEY (id) REFERENCES predios (id)
 );
 
 CREATE TABLE IF NOT EXISTS construcciones (
-  cid SERIAL PRIMARY KEY,
+  cid SERIAL PRIMARY KEY UNIQUE,
   c_pisos VARCHAR(100) NOT NULL,
   c_area VARCHAR(100) NOT NULL,
   -- Should be later 3 predefined values Industrial, Comercial o Residencial
@@ -21,24 +23,21 @@ CREATE TABLE IF NOT EXISTS construcciones (
 );
 
 CREATE TABLE IF NOT EXISTS terrenos (
-  tid SERIAL PRIMARY KEY,
+  tid SERIAL PRIMARY KEY UNIQUE,
   t_area VARCHAR(100) NOT NULL,
   t_precio VARCHAR(100) NOT NULL,
   t_tipo VARCHAR(100) NOT NULL,
-  construccion_id INT REFERENCES construcciones(cid)
+  id INT NOT NULL,
+  FOREIGN KEY (id) REFERENCES predios (id)
 );
 
 CREATE TABLE IF NOT EXISTS predios(
-  id SERIAL PRIMARY KEY,
+  id SERIAL PRIMARY KEY UNIQUE,
   nombre VARCHAR(100) NOT NULL,
   precio VARCHAR(100) NOT NULL,
   departamento VARCHAR(100) NOT NULL,
   municipio VARCHAR(100) NOT NULL,
-  propietario_id INT REFERENCES propietarios(pid),
-  construccion_id INT REFERENCES construcciones(cid),
   -- Use this to optional reference nullable foreign key
-  terreno_id INT,
-  FOREIGN KEY (terreno_id) REFERENCES terrenos(tid),
   created_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
