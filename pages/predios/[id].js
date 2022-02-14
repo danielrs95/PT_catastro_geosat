@@ -40,7 +40,7 @@ const Edit = ({ predio, dispatch }) => {
     console.log('Predio enviado a editar', updatedPredio);
 
     dispatch(updatePredio(updatedPredio));
-    // router.push('/');
+    router.push('/');
   };
 
   const onDeletedHandler = (predio) => {

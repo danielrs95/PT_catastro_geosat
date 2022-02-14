@@ -32,42 +32,48 @@ export default async (req, res) => {
       try {
         await db.query('BEGIN');
 
-        const queryText4 =
-          'INSERT INTO predios(nombre, precio, departamento, municipio) VALUES($1, $2, $3, $4) RETURNING *;';
-        const response4 = await db.query(queryText4, [
+        const queryText = `
+        INSERT INTO predios(nombre, precio, departamento, municipio)
+        VALUES($1, $2, $3, $4)
+        RETURNING *;`;
+        const createPredio = await db.query(queryText, [
           body.nombre,
           body.precio,
           body.departamento,
           body.municipio,
         ]);
 
-        const queryText =
-          'INSERT INTO propietarios(p_direccion, p_telefono, p_email, p_tipo, id) VALUES($1, $2, $3, $4, $5) RETURNING *;';
-        const response = await db.query(queryText, [
+        const queryText2 = `
+        INSERT INTO propietarios(p_direccion, p_telefono, p_email, p_tipo, id)
+        VALUES($1, $2, $3, $4, $5)
+        RETURNING *;`;
+        const createPropietario = await db.query(queryText2, [
           body.p_direccion,
           body.p_telefono,
           body.p_email,
           body.p_tipo,
-          response4.rows[0].id,
+          createPredio.rows[0].id,
         ]);
 
-        const queryText3 =
-          'INSERT INTO terrenos(t_area, t_precio, t_tipo, id) VALUES($1, $2, $3, $4) RETURNING *;';
-        const response3 = await db.query(queryText3, [
+        const queryText3 = `
+        INSERT INTO terrenos(t_area, t_precio, t_tipo, id)
+        VALUES($1, $2, $3, $4) RETURNING *;`;
+        const createTerreno = await db.query(queryText3, [
           body.t_area,
           body.t_precio,
           body.t_tipo,
-          response4.rows[0].id,
+          createPredio.rows[0].id,
         ]);
 
-        const queryText2 =
-          'INSERT INTO construcciones(c_pisos, c_area, c_tipo, c_direccion, id) VALUES($1, $2, $3, $4, $5) RETURNING *;';
-        const response2 = await db.query(queryText2, [
+        const queryText4 = `
+        INSERT INTO construcciones(c_pisos, c_area, c_tipo, c_direccion, id)
+        VALUES($1, $2, $3, $4, $5) RETURNING *;`;
+        const createConstruccion = await db.query(queryText4, [
           body.c_pisos,
           body.c_area,
-          body.c_area,
+          body.c_tipo,
           body.c_direccion,
-          response4.rows[0].id,
+          createPredio.rows[0].id,
         ]);
 
         await db.query('COMMIT');
@@ -75,10 +81,10 @@ export default async (req, res) => {
         return res
           .status(200)
           .json([
-            response4.rows[0],
-            response.rows[0],
-            response3.rows[0],
-            response2.rows[0],
+            createPredio.rows[0],
+            createPropietario.rows[0],
+            createTerreno.rows[0],
+            createConstruccion.rows[0],
           ]);
       } catch (error) {
         await db.query('ROLLBACK');
