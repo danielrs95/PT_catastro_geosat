@@ -100,7 +100,13 @@ const columns = [
 
 const TableAnt = ({ data }) => {
   return (
-    <Table rowKey={data.id} columns={columns} dataSource={data} size='small' />
+    <Table
+      rowKey={data.id}
+      columns={columns}
+      dataSource={data}
+      size='small'
+      bordered
+    />
   );
 };
 

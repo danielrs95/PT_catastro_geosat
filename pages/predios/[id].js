@@ -17,7 +17,7 @@ const Edit = ({ predio, dispatch }) => {
   const router = useRouter();
 
   const onFinish = (values) => {
-    console.log('DESDE CLIENTE', predio);
+    console.log('DESDE onFinish al editar ', predio);
 
     let updatedPredio = {
       ...predio,

@@ -61,7 +61,6 @@ export const resolvers = {
         const predio = await axios.get(
           `http://localhost:3000/api/predios/${args.id}`
         );
-        // console.log(predio.data);
         return {
           ...predio.data,
           propietario: {
@@ -115,7 +114,6 @@ export const resolvers = {
           municipio: args.municipio,
         };
 
-        // Destructure data from response
         const predio = await axios.post(
           `http://localhost:3000/api/predios/`,
           data_sample
@@ -154,10 +152,6 @@ export const resolvers = {
         const response = await axios.delete(
           `http://localhost:3000/api/predios/${args.id}`
         );
-
-        console.log(args);
-        console.log(response.data);
-
         return response.data;
       } catch (error) {
         throw error;

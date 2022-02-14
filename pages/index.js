@@ -2,7 +2,7 @@ import Head from 'next/head';
 import TableAnt from '../components/TableAnt';
 import Link from 'next/link';
 
-import { Button, Layout } from 'antd';
+import { Layout } from 'antd';
 import { Row, Col } from 'antd';
 import { wrapper } from '../redux/store';
 import { connect, useDispatch, useSelector } from 'react-redux';
@@ -10,7 +10,7 @@ import { listPredios } from '../redux/action/prediosActions';
 import { bindActionCreators } from 'redux';
 import React from 'react';
 
-const { Header, Footer, Content } = Layout;
+const { Header, Content } = Layout;
 
 const Home = ({ predios }) => {
   // we can use hooks or connect
@@ -28,14 +28,14 @@ const Home = ({ predios }) => {
         <Col xs={23}>
           <Header></Header>
           <Content>
+            <h1>Tabla for catastros</h1>
             <Link href='/predios/new/'>
-              <a>Nuevo predio</a>
+              <h2>
+                <a>Nuevo predio</a>
+              </h2>
             </Link>
-            <p>Tabla for catastros</p>
             <TableAnt data={predios} />
           </Content>
-
-          <Footer>Footer</Footer>
         </Col>
       </Row>
     </>

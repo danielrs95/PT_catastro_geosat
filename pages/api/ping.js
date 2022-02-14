@@ -7,7 +7,6 @@ export default async (req, res) => {
 
   res.status(200).json({
     message: 'API Working',
-    // messageDB: `Data base working, ${response} entries `,
     time: response.rows[0].now,
   });
 };

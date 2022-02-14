@@ -17,11 +17,6 @@ export default async (req, res) => {
           ON propietarios.id = construcciones.id;
         `;
 
-        // const query =
-        //   'SELECT * FROM propietarios NATURAL JOIN predios, terrenos;';
-
-        // const query =
-        //   'SELECT DISTINCT id, nombre, precio, departamento, municipio, propietario_id, construccion_id, terreno_id FROM predios NATURAL JOIN propietarios, construcciones;';
         const response = await db.query(query);
         return res.json(response.rows);
       } catch (error) {
@@ -83,8 +78,6 @@ export default async (req, res) => {
           ...createTerreno.rows[0],
           ...createConstruccion.rows[0],
         };
-
-        // console.log(test);
 
         return res.status(200).json(createComplete);
       } catch (error) {
