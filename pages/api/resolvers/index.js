@@ -5,7 +5,7 @@ export const resolvers = {
     getPredios: async () => {
       try {
         const predios = await axios.get('http://localhost:3000/api/predios/');
-        console.log('Console desde query', predios.data);
+        console.log('Console desde getPredios()', predios.data);
         return predios.data.map(
           ({
             id,
@@ -21,6 +21,9 @@ export const resolvers = {
             c_area,
             c_tipo,
             c_direccion,
+            t_area,
+            t_precio,
+            t_tipo,
           }) => ({
             id,
             nombre,
@@ -32,6 +35,11 @@ export const resolvers = {
               telefono: p_telefono,
               email: p_email,
               tipo: p_tipo,
+            },
+            terrenos: {
+              area: t_area,
+              precio: t_precio,
+              tipo: t_tipo,
             },
             construcciones: [
               {
