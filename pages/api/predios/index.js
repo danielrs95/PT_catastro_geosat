@@ -77,14 +77,16 @@ export default async (req, res) => {
 
         await db.query('COMMIT');
 
-        return res
-          .status(200)
-          .json([
-            createPredio.rows[0],
-            createPropietario.rows[0],
-            createTerreno.rows[0],
-            createConstruccion.rows[0],
-          ]);
+        const createComplete = {
+          ...createPredio.rows[0],
+          ...createPropietario.rows[0],
+          ...createTerreno.rows[0],
+          ...createConstruccion.rows[0],
+        };
+
+        // console.log(test);
+
+        return res.status(200).json(createComplete);
       } catch (error) {
         await db.query('ROLLBACK');
         throw error;
