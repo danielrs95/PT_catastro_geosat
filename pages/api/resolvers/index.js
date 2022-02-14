@@ -116,13 +116,34 @@ export const resolvers = {
         };
 
         // Destructure data from response
-        const { data } = await axios.post(
+        const predio = await axios.post(
           `http://localhost:3000/api/predios/`,
           data_sample
         );
 
-        console.log('DATA createPredio', data);
-        return data;
+        console.log('DATA createPredio', predio.data);
+        return {
+          ...predio.data,
+          propietario: {
+            direccion: predio.data.p_direccion,
+            telefono: predio.data.p_telefono,
+            email: predio.data.p_email,
+            tipo: predio.data.p_tipo,
+          },
+          terrenos: {
+            area: predio.data.t_area,
+            precio: predio.data.t_precio,
+            tipo: predio.data.t_tipo,
+          },
+          construcciones: [
+            {
+              pisos: predio.data.c_pisos,
+              area: predio.data.c_area,
+              tipo: predio.data.c_tipo,
+              direccion: predio.data.c_direccion,
+            },
+          ],
+        };
       } catch (error) {
         throw error;
       }
