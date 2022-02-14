@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS propietarios (
   -- Should be later 2 predefined values Natural/Juridica
   p_tipo VARCHAR(100) NOT NULL,
   id INT NOT NULL,
-  FOREIGN KEY (id) REFERENCES predios (id)
+  FOREIGN KEY (id) REFERENCES predios (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS terrenos (
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS terrenos (
   t_precio VARCHAR(100) NOT NULL,
   t_tipo VARCHAR(100) NOT NULL,
   id INT NOT NULL,
-  FOREIGN KEY (id) REFERENCES predios (id)
+  FOREIGN KEY (id) REFERENCES predios (id) ON DELETE CASCADE
 );
 
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS construcciones (
   -- Should be later 3 predefined values Industrial, Comercial o Residencial
   c_tipo VARCHAR(100) NOT NULL,
   c_direccion VARCHAR(100) NOT NULL,
-  id INTEGER NOT NULL REFERENCES predios(id)
+  id INTEGER NOT NULL REFERENCES predios(id) ON DELETE CASCADE
 );
 
 
