@@ -33,12 +33,14 @@ const Edit = ({ predio, dispatch }) => {
       p_telefono: values.p_telefono,
       p_email: values.p_email,
       p_tipo: values.p_tipo,
-      terreno: values.terreno,
+      t_area: values.t_area,
+      t_precio: values.t_precio,
+      t_tipo: values.t_tipo,
     };
-    // console.log(updatedPredio);
+    console.log('Predio enviado a editar', updatedPredio);
 
     dispatch(updatePredio(updatedPredio));
-    router.push('/');
+    // router.push('/');
   };
 
   const onDeletedHandler = (predio) => {
