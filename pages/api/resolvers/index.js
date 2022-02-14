@@ -98,21 +98,21 @@ export const resolvers = {
 
         // Hardcoded object for testing
         const data_sample = {
-          c_pisos: 'graphql',
-          c_area: 'graphql',
-          c_tipo: 'graphql',
-          c_direccion: 'graphql',
-          p_direccion: 'graphql',
-          p_telefono: 'graphql',
-          p_email: 'graphql',
-          p_tipo: 'graphql',
-          t_area: 'graphql',
-          t_precio: 'graphql',
-          t_tipo: 'graphql',
-          nombre: 'args.nombre',
-          precio: 'graphql',
-          departamento: 'graphql',
-          municipio: 'graphql',
+          c_pisos: args.c_pisos,
+          c_area: args.c_area,
+          c_tipo: args.c_tipo,
+          c_direccion: args.c_direccion,
+          p_direccion: args.p_direccion,
+          p_telefono: args.p_telefono,
+          p_email: args.p_email,
+          p_tipo: args.p_tipo,
+          t_area: args.t_area,
+          t_precio: args.t_precio,
+          t_tipo: args.t_tipo,
+          nombre: args.nombre,
+          precio: args.precio,
+          departamento: args.departamento,
+          municipio: args.municipio,
         };
 
         // Destructure data from response
