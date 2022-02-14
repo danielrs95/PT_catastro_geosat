@@ -94,11 +94,11 @@ export const resolvers = {
   Mutation: {
     createPredio: async (_, args) => {
       try {
-        console.log('Console log desde createPredio', args);
+        console.log('ARGS createPredio', args);
 
         // Hardcoded object for testing
         const data_sample = {
-          // c_pisos: 'graphql',
+          c_pisos: 'graphql',
           c_area: 'graphql',
           c_tipo: 'graphql',
           c_direccion: 'graphql',
@@ -106,7 +106,10 @@ export const resolvers = {
           p_telefono: 'graphql',
           p_email: 'graphql',
           p_tipo: 'graphql',
-          nombre: args.nombre,
+          t_area: 'graphql',
+          t_precio: 'graphql',
+          t_tipo: 'graphql',
+          nombre: 'args.nombre',
           precio: 'graphql',
           departamento: 'graphql',
           municipio: 'graphql',
@@ -118,21 +121,8 @@ export const resolvers = {
           data_sample
         );
 
-        console.log('DATA desde create graphql', data);
-        return {
-          nombre: data.nombre,
-          precio: data.precio,
-          departamento: data.departamento,
-          municipio: data.municipio,
-          propietario: {
-            id: data.propietario_id,
-          },
-          construcciones: [
-            {
-              id: data.construccion_id,
-            },
-          ],
-        };
+        console.log('DATA createPredio', data);
+        return data;
       } catch (error) {
         throw error;
       }

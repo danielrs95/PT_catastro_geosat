@@ -6,7 +6,6 @@ export default async (req, res) => {
   switch (method) {
     case 'GET':
       try {
-        // Merge tables propietarios & predios by ID
         const query = `
         SELECT *
         FROM terrenos
@@ -95,24 +94,3 @@ export default async (req, res) => {
       return;
   }
 };
-
-// const query = `WITH INSERTED AS (
-//   insert INTO construcciones(c_pisos, c_area, c_tipo, c_direccion)
-//   values ( '3', '200', 'Residencial', 'Medellin')
-//   on CONFLICT DO NOTHING
-//   RETURNING cid
-// ), new_user AS(
-//   INSERT INTO propietarios(p_direccion, p_telefono, p_email, p_tipo)
-//   VALUES ('Medellin HARD CODED','300354','daniel@email','Natural')
-//   ON CONFLICT DO NOTHING
-//   RETURNING pid
-// ) INSERT INTO predios(nombre, precio, departamento, municipio, propietario_id, construccion_id)
-// values (
-//   'Seeder', 'Seeder', 'Seeder', 'Seeder',
-//   COALESCE(
-//     (SELECT pid from new_user)
-//   ),
-//   COALESCE(
-//     (SELECT cid FROM INSERTED)
-//   )
-// ) RETURNING *`;
