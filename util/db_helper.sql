@@ -2,24 +2,25 @@
 
 DROP TABLE construcciones, predios, propietarios, terrenos;
 
+CREATE TABLE IF NOT EXISTS predios(
+  id SERIAL PRIMARY KEY UNIQUE,
+  nombre VARCHAR(100) NOT NULL,
+  precio VARCHAR(100) NOT NULL,
+  departamento VARCHAR(100) NOT NULL,
+  municipio VARCHAR(100) NOT NULL,
+  -- Use this to optional reference nullable foreign key
+  created_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE IF NOT EXISTS propietarios (
   pid SERIAL PRIMARY KEY UNIQUE,
   p_direccion VARCHAR(100) NOT NULL,
   p_telefono VARCHAR(100) NOT NULL,
   p_email VARCHAR(100) NOT NULL,
   -- Should be later 2 predefined values Natural/Juridica
-  p_tipo VARCHAR(100) NOT NULL
+  p_tipo VARCHAR(100) NOT NULL,
   id INT NOT NULL,
   FOREIGN KEY (id) REFERENCES predios (id)
-);
-
-CREATE TABLE IF NOT EXISTS construcciones (
-  cid SERIAL PRIMARY KEY UNIQUE,
-  c_pisos VARCHAR(100) NOT NULL,
-  c_area VARCHAR(100) NOT NULL,
-  -- Should be later 3 predefined values Industrial, Comercial o Residencial
-  c_tipo VARCHAR(100) NOT NULL,
-  c_direccion VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS terrenos (
@@ -31,15 +32,16 @@ CREATE TABLE IF NOT EXISTS terrenos (
   FOREIGN KEY (id) REFERENCES predios (id)
 );
 
-CREATE TABLE IF NOT EXISTS predios(
-  id SERIAL PRIMARY KEY UNIQUE,
-  nombre VARCHAR(100) NOT NULL,
-  precio VARCHAR(100) NOT NULL,
-  departamento VARCHAR(100) NOT NULL,
-  municipio VARCHAR(100) NOT NULL,
-  -- Use this to optional reference nullable foreign key
-  created_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+
+CREATE TABLE IF NOT EXISTS construcciones (
+  cid SERIAL PRIMARY KEY UNIQUE,
+  c_pisos VARCHAR(100) NOT NULL,
+  c_area VARCHAR(100) NOT NULL,
+  -- Should be later 3 predefined values Industrial, Comercial o Residencial
+  c_tipo VARCHAR(100) NOT NULL,
+  c_direccion VARCHAR(100) NOT NULL
 );
+
 
 INSERT INTO propietarios(
   p_direccion, p_telefono, p_email, p_tipo

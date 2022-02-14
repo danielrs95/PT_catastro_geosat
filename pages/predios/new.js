@@ -13,25 +13,23 @@ const New = ({ predio, dispatch }) => {
 
   const onFinish = (values) => {
     let newPredio = {
-      construccion_pisos: values.construccion_pisos,
-      construccion_area: values.construccion_area,
-      construccion_tipo: values.construccion_tipo,
-      construccion_direccion: values.construccion_direccion,
-      propietario_direccion: values.propietario_direccion,
-      propietario_telefono: values.propietario_telefono,
-      propietario_email: values.propietario_email,
-      propietario_tipo: values.propietario_direccion,
+      t_area: values.t_area,
+      t_precio: values.t_precio,
+      t_tipo: values.t_tipo,
+      p_direccion: values.propietario_direccion,
+      p_telefono: values.propietario_telefono,
+      p_email: values.propietario_email,
+      p_tipo: values.propietario_direccion,
       nombre: values.nombre,
       precio: values.precio,
       departamento: values.departamento,
       municipio: values.municipio,
-      terreno_id: values.terreno,
     };
 
     console.log('Log desde new.js', newPredio);
 
     dispatch(createPredio(newPredio));
-    // router.push('/');
+    router.push('/');
   };
 
   return (
@@ -43,15 +41,6 @@ const New = ({ predio, dispatch }) => {
       wrapperCol={{
         span: 16,
       }}
-      // initialValues={{
-      //   nombre: predio.nombre,
-      //   precio: predio.precio,
-      //   departamento: predio.departamento,
-      //   municipio: predio.municipio,
-      //   propietario: predio.propietario,
-      //   construcciones: predio.construcciones,
-      //   terreno: predio.terreno,
-      // }}
       autoComplete='off'
     >
       <Form.Item
@@ -139,38 +128,38 @@ const New = ({ predio, dispatch }) => {
       </Form.Item>
 
       <Form.Item
-        label='Construcciones Pisos'
-        name='construccion_pisos'
+        label='Terreno Area'
+        name='t_area'
         rules={[{ message: 'Ingrese un construcciones' }]}
       >
         <Input />
       </Form.Item>
 
       <Form.Item
-        label='Construcciones Area'
-        name='construccion_area'
+        label='Terreno precio'
+        name='t_precio'
         rules={[{ message: 'Ingrese un construcciones' }]}
       >
         <Input />
       </Form.Item>
 
       <Form.Item
-        label='Construcciones Tipo'
-        name='construccion_tipo'
+        label='Terreno tipo'
+        name='t_tipo'
         rules={[{ message: 'Ingrese un construcciones' }]}
       >
         <Input />
       </Form.Item>
 
-      <Form.Item
+      {/* <Form.Item
         label='Construcciones Direccion'
         name='construccion_direccion'
         rules={[{ message: 'Ingrese un construcciones' }]}
       >
         <Input />
-      </Form.Item>
+      </Form.Item> */}
 
-      <Form.Item
+      {/* <Form.Item
         label='Terreno'
         name='terreno'
         rules={[
@@ -181,7 +170,7 @@ const New = ({ predio, dispatch }) => {
         ]}
       >
         <Input />
-      </Form.Item>
+      </Form.Item> */}
 
       <Form.Item
         wrapperCol={{

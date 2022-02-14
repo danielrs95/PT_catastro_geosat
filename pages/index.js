@@ -32,10 +32,10 @@ const Home = ({ predios }) => {
               <a>Nuevo predio</a>
             </Link>
             <p>Tabla for catastros</p>
-            {/* <TableAnt data={predios} /> */}
+            <TableAnt data={predios} />
           </Content>
 
-          <table>
+          {/* <table>
             <thead>
               <tr>
                 <th>NOMBRE</th>
@@ -50,7 +50,7 @@ const Home = ({ predios }) => {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table> */}
 
           <Footer>Footer</Footer>
         </Col>
