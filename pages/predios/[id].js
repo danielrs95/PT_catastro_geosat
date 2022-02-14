@@ -229,6 +229,14 @@ const Edit = ({ predio, dispatch }) => {
         <Link href='/'>
           <a>Regresar</a>
         </Link>
+
+        <Button
+          type='primary'
+          danger='true'
+          onClick={() => onDeletedHandler(predio)}
+        >
+          Delete
+        </Button>
       </Form.Item>
     </Form>
   );
