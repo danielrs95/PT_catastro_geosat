@@ -61,5 +61,7 @@ export const typeDefs = gql`
       t_precio: String
       t_tipo: String
     ): Predio!
+
+    deletePredio(id: ID!): Predio!
   }
 `;

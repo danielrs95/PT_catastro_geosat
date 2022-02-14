@@ -148,5 +148,20 @@ export const resolvers = {
         throw error;
       }
     },
+
+    deletePredio: async (_, args) => {
+      try {
+        const response = await axios.delete(
+          `http://localhost:3000/api/predios/${args.id}`
+        );
+
+        console.log(args);
+        console.log(response.data);
+
+        return response.data;
+      } catch (error) {
+        throw error;
+      }
+    },
   },
 };
