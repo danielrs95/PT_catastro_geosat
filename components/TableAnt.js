@@ -76,10 +76,32 @@ const columns = [
     key: 't_tipo',
     dataIndex: 't_tipo',
   },
+  {
+    title: 'c_pisos',
+    key: 'c_pisos',
+    dataIndex: 'c_pisos',
+  },
+  {
+    title: 'c_area',
+    key: 'c_area',
+    dataIndex: 'c_area',
+  },
+  {
+    title: 'c_tipo',
+    key: 'c_tipo',
+    dataIndex: 'c_tipo',
+  },
+  {
+    title: 'c_direccion',
+    key: 'c_direccion',
+    dataIndex: 'c_direccion',
+  },
 ];
 
 const TableAnt = ({ data }) => {
-  return <Table rowKey={data.id} columns={columns} dataSource={data} />;
+  return (
+    <Table rowKey={data.id} columns={columns} dataSource={data} size='small' />
+  );
 };
 
 export default TableAnt;

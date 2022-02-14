@@ -13,7 +13,10 @@ export default async (req, res) => {
         INNER JOIN propietarios
           ON terrenos.id = propietarios.id
         INNER JOIN predios
-          ON propietarios.id = predios.id;`;
+          ON propietarios.id = predios.id
+        INNER JOIN construcciones
+          ON propietarios.id = construcciones.id;
+        `;
 
         // const query =
         //   'SELECT * FROM propietarios NATURAL JOIN predios, terrenos;';
@@ -32,7 +35,7 @@ export default async (req, res) => {
         const queryText4 =
           'INSERT INTO predios(nombre, precio, departamento, municipio) VALUES($1, $2, $3, $4) RETURNING *;';
         const response4 = await db.query(queryText4, [
-          body.name,
+          body.nombre,
           body.precio,
           body.departamento,
           body.municipio,
@@ -57,20 +60,26 @@ export default async (req, res) => {
           response4.rows[0].id,
         ]);
 
-        // const queryText2 =
-        //   'INSERT INTO construcciones(c_pisos, c_area, c_tipo, c_direccion) VALUES($1, $2, $3, $4) RETURNING cid;';
-        // const response2 = await db.query(queryText2, [
-        //   body.c_pisos,
-        //   body.c_area,
-        //   body.c_area,
-        //   body.c_direccion,
-        // ]);
+        const queryText2 =
+          'INSERT INTO construcciones(c_pisos, c_area, c_tipo, c_direccion, id) VALUES($1, $2, $3, $4, $5) RETURNING *;';
+        const response2 = await db.query(queryText2, [
+          body.c_pisos,
+          body.c_area,
+          body.c_area,
+          body.c_direccion,
+          response4.rows[0].id,
+        ]);
 
         await db.query('COMMIT');
 
         return res
           .status(200)
-          .json([response4.rows[0], response.rows[0], response3.rows[0]]);
+          .json([
+            response4.rows[0],
+            response.rows[0],
+            response3.rows[0],
+            response2.rows[0],
+          ]);
       } catch (error) {
         await db.query('ROLLBACK');
         throw error;

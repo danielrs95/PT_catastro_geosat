@@ -39,7 +39,8 @@ CREATE TABLE IF NOT EXISTS construcciones (
   c_area VARCHAR(100) NOT NULL,
   -- Should be later 3 predefined values Industrial, Comercial o Residencial
   c_tipo VARCHAR(100) NOT NULL,
-  c_direccion VARCHAR(100) NOT NULL
+  c_direccion VARCHAR(100) NOT NULL,
+  id INTEGER NOT NULL REFERENCES predios(id)
 );
 
 

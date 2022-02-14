@@ -20,6 +20,10 @@ const New = ({ predio, dispatch }) => {
       p_telefono: values.propietario_telefono,
       p_email: values.propietario_email,
       p_tipo: values.propietario_direccion,
+      c_pisos: values.c_pisos,
+      c_area: values.c_area,
+      c_tipo: values.c_tipo,
+      c_direccion: values.c_direccion,
       nombre: values.nombre,
       precio: values.precio,
       departamento: values.departamento,
@@ -36,10 +40,10 @@ const New = ({ predio, dispatch }) => {
     <Form
       onFinish={onFinish}
       labelCol={{
-        span: 8,
+        span: 10,
       }}
       wrapperCol={{
-        span: 16,
+        span: 5,
       }}
       autoComplete='off'
     >
@@ -151,26 +155,37 @@ const New = ({ predio, dispatch }) => {
         <Input />
       </Form.Item>
 
-      {/* <Form.Item
-        label='Construcciones Direccion'
-        name='construccion_direccion'
+      <Form.Item
+        label='Construccion pisos'
+        name='c_pisos'
         rules={[{ message: 'Ingrese un construcciones' }]}
       >
         <Input />
-      </Form.Item> */}
+      </Form.Item>
 
-      {/* <Form.Item
-        label='Terreno'
-        name='terreno'
-        rules={[
-          {
-            // required: true,
-            message: 'Ingrese un terreno',
-          },
-        ]}
+      <Form.Item
+        label='Construccion area'
+        name='c_area'
+        rules={[{ message: 'Ingrese un construcciones' }]}
       >
         <Input />
-      </Form.Item> */}
+      </Form.Item>
+
+      <Form.Item
+        label='Construccion tipo'
+        name='c_tipo'
+        rules={[{ message: 'Ingrese un construcciones' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label='Construccion direccion'
+        name='c_direccion'
+        rules={[{ message: 'Ingrese un construcciones' }]}
+      >
+        <Input />
+      </Form.Item>
 
       <Form.Item
         wrapperCol={{

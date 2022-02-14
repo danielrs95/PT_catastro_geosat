@@ -25,7 +25,7 @@ const Home = ({ predios }) => {
       </Head>
 
       <Row justify='center'>
-        <Col xs={18}>
+        <Col xs={23}>
           <Header></Header>
           <Content>
             <Link href='/predios/new/'>
@@ -34,23 +34,6 @@ const Home = ({ predios }) => {
             <p>Tabla for catastros</p>
             <TableAnt data={predios} />
           </Content>
-
-          {/* <table>
-            <thead>
-              <tr>
-                <th>NOMBRE</th>
-                <th>PRECIO</th>
-              </tr>
-            </thead>
-            <tbody>
-              {predios.map((predio, key) => (
-                <tr key={key}>
-                  <td>{predio.nombre}</td>
-                  <td>{predio.precio}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table> */}
 
           <Footer>Footer</Footer>
         </Col>
