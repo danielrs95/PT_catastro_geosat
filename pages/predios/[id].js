@@ -13,7 +13,7 @@ import {
 import { wrapper } from '../../redux/store';
 
 const Edit = ({ predio, dispatch }) => {
-  // console.log(predio);
+  console.log('console log predio desde editar', predio);
   const router = useRouter();
 
   const onFinish = (values) => {
@@ -38,23 +38,17 @@ const Edit = ({ predio, dispatch }) => {
     // console.log(updatedPredio);
 
     dispatch(updatePredio(updatedPredio));
-    // router.push('/');
+    router.push('/');
   };
 
   const onDeletedHandler = (predio) => {
     dispatch(deletePredio(predio));
-    // router.push('/');
+    router.push('/');
   };
 
   return (
     <Form
       onFinish={onFinish}
-      labelCol={{
-        span: 8,
-      }}
-      wrapperCol={{
-        span: 16,
-      }}
       initialValues={{
         nombre: predio.nombre,
         precio: predio.precio,
@@ -68,7 +62,15 @@ const Edit = ({ predio, dispatch }) => {
         p_telefono: predio.p_telefono,
         p_email: predio.p_email,
         p_tipo: predio.p_tipo,
-        terreno: predio.terreno,
+        t_area: predio.t_area,
+        t_precio: predio.t_precio,
+        t_tipo: predio.t_tipo,
+      }}
+      labelCol={{
+        span: 10,
+      }}
+      wrapperCol={{
+        span: 5,
       }}
       autoComplete='off'
     >
@@ -157,7 +159,31 @@ const Edit = ({ predio, dispatch }) => {
       </Form.Item>
 
       <Form.Item
-        label='Construcciones Pisos'
+        label='Terreno Area'
+        name='t_area'
+        rules={[{ message: 'Ingrese un construcciones' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label='Terreno precio'
+        name='t_precio'
+        rules={[{ message: 'Ingrese un construcciones' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label='Terreno tipo'
+        name='t_tipo'
+        rules={[{ message: 'Ingrese un construcciones' }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label='Construccion pisos'
         name='c_pisos'
         rules={[{ message: 'Ingrese un construcciones' }]}
       >
@@ -165,7 +191,7 @@ const Edit = ({ predio, dispatch }) => {
       </Form.Item>
 
       <Form.Item
-        label='Construcciones Area'
+        label='Construccion area'
         name='c_area'
         rules={[{ message: 'Ingrese un construcciones' }]}
       >
@@ -173,7 +199,7 @@ const Edit = ({ predio, dispatch }) => {
       </Form.Item>
 
       <Form.Item
-        label='Construcciones Tipo'
+        label='Construccion tipo'
         name='c_tipo'
         rules={[{ message: 'Ingrese un construcciones' }]}
       >
@@ -181,22 +207,9 @@ const Edit = ({ predio, dispatch }) => {
       </Form.Item>
 
       <Form.Item
-        label='Construcciones Direccion'
+        label='Construccion direccion'
         name='c_direccion'
         rules={[{ message: 'Ingrese un construcciones' }]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label='Terreno'
-        name='terreno'
-        rules={[
-          {
-            // required: true,
-            message: 'Ingrese un terreno',
-          },
-        ]}
       >
         <Input />
       </Form.Item>
@@ -211,14 +224,9 @@ const Edit = ({ predio, dispatch }) => {
           Submit
         </Button>
 
-        <Button type='link' href='/'>
-          Volver
-        </Button>
-
-        <Button onClick={() => onDeletedHandler(predio)} danger>
-          {' '}
-          Eliminar predios
-        </Button>
+        <Link href='/'>
+          <a>Regresar</a>
+        </Link>
       </Form.Item>
     </Form>
   );

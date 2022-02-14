@@ -6,8 +6,16 @@ export default async (req, res) => {
   switch (method) {
     case 'GET':
       try {
-        const text =
-          'SELECT * FROM predios NATURAL JOIN propietarios, construcciones WHERE id = $1 ';
+        const text = `
+        SELECT *
+        FROM terrenos
+        INNER JOIN propietarios
+          ON terrenos.id = propietarios.id
+        INNER JOIN predios
+          ON propietarios.id = predios.id
+        INNER JOIN construcciones
+          ON propietarios.id = construcciones.id
+        WHERE propietarios.id = $1;`;
         const values = [query.id];
         const result = await db.query(text, values);
 

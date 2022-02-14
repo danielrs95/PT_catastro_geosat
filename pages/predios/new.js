@@ -19,7 +19,7 @@ const New = ({ predio, dispatch }) => {
       p_direccion: values.propietario_direccion,
       p_telefono: values.propietario_telefono,
       p_email: values.propietario_email,
-      p_tipo: values.propietario_direccion,
+      p_tipo: values.propietario_tipo,
       c_pisos: values.c_pisos,
       c_area: values.c_area,
       c_tipo: values.c_tipo,
